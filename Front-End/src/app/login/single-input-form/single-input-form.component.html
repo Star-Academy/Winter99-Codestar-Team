@@ -1,0 +1,16 @@
+<div class="container">
+  <form onsubmit="">
+    <div class="form-title">
+      <p>برنامه</p>
+    </div>
+    <mat-form-field class="input" appearance="outline">
+      <mat-label> {{ inputName }} </mat-label>
+      <input type="{{ inputType }}" matInput [formControl]="inputControl" />
+      <!-- <mat-error>hello</mat-error> -->
+    </mat-form-field>
+    <div class="link" *ngIf="linkText && linkHref">
+      <a href="{{ linkHref }}" mat-button>{{ linkText }}</a>
+    </div>
+    <button mat-stroked-button class="button">ادامه</button>
+  </form>
+</div>

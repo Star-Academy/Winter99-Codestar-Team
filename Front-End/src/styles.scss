@@ -1,1 +1,35 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: kamran;
+  src: url("assets/Fonts/0\ KAMRAN.TTF");
+}
+@font-face {
+  font-family: kamran;
+  src: url("assets/Fonts/0\ KAMRAN\ BOLD.TTF");
+  font-weight: bold;
+}
+@font-face {
+  font-family: lotus;
+  src: url("assets/Fonts/B\ LOTUS.TTF");
+}
+@font-face {
+  font-family: lotus;
+  src: url("assets/Fonts/B\ LOTUS\ BOLD.TTF");
+  font-weight: bold;
+}
+@font-face {
+  font-family: narenj;
+  src: url("assets/Fonts/0\ NARENJ.TTF");
+}
+html,
+body {
+  height: 100%;
+}
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: lotus;
+}
+a {
+  text-decoration: none;
+}
