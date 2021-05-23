@@ -20,6 +20,19 @@
   font-family: narenj;
   src: url("assets/Fonts/0\ NARENJ.TTF");
 }
+@font-face {
+  font-family: iransans;
+  src: url("assets/Fonts/iransansX/IRANSansX-Regular.ttf") format("truetype"),
+    url("assets/Fonts/iransansX/Otf\ fonts/IRANSansX-Regular.otf")
+      format("opentype");
+}
+@font-face {
+  font-family: iransans;
+  src: url("assets/Fonts/iransansX/IRANSansX-Bold.ttf") format("truetype"),
+    url("assets/Fonts/iransansX/Otf\ fonts/IRANSansX-Bold.otf")
+      format("opentype");
+  font-weight: bold;
+}
 html,
 body {
   height: 100%;
@@ -28,7 +41,7 @@ body {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: lotus;
+  font-family: iransans;
 }
 a {
   text-decoration: none;
