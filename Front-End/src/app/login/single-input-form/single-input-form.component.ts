@@ -13,23 +13,25 @@ import {
 })
 export class SingleInputFormComponent implements OnInit {
   @Input()
-  inputName: string;
+  public inputName: string;
   @Input()
-  inputType: string;
+  public inputType: string;
   @Input()
-  inputValidators: ValidatorFn[] = [];
+  public inputValidators: ValidatorFn[] = [];
   @Input()
-  linkText: string;
+  public linkText: string;
   @Input()
-  linkHref: string;
+  public linkHref: string;
   @Output()
-  inputValue: string;
-  inputControl: FormControl;
+  public inputValue: string;
+  public inputControl: FormControl;
+  public hideInputValue: boolean = false;
 
   constructor() {
     this.inputValidators.push(Validators.required);
     this.inputControl = new FormControl('', this.inputValidators);
   }
+
   ngOnInit() {
     if (!this.inputName) {
       throw new TypeError("'inputName' is required.");
@@ -42,5 +44,10 @@ export class SingleInputFormComponent implements OnInit {
         "'linkText' and 'linkType' aren't required except when you input one of them."
       );
     }
+  }
+
+  getInputType(): string {
+    const visibleType = this.inputType == 'password' ? 'text' : this.inputType;
+    return this.hideInputValue ? 'password' : visibleType;
   }
 }

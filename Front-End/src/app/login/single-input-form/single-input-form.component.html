@@ -1,11 +1,21 @@
 <div class="container">
-  <form onsubmit="">
+  <form onsubmit="" dir="rtl">
     <div class="form-title">
       <p>برنامه</p>
     </div>
     <mat-form-field class="input" appearance="outline">
       <mat-label> {{ inputName }} </mat-label>
-      <input type="{{ inputType }}" matInput [formControl]="inputControl" />
+      <input [type]="getInputType()" matInput [formControl]="inputControl" />
+      <button
+        *ngIf="inputType == 'password'"
+        mat-icon-button
+        matSuffix
+        (click)="hideInputValue = !hideInputValue"
+      >
+        <mat-icon>
+          {{ hideInputValue ? "visibility" : "visibility_off" }}
+        </mat-icon>
+      </button>
       <!-- <mat-error>hello</mat-error> -->
     </mat-form-field>
     <div class="link" *ngIf="linkText && linkHref">

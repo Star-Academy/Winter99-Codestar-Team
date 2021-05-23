@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { SingleInputFormComponent } from './login/single-input-form/single-input-form.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, SingleInputFormComponent],
@@ -22,6 +23,7 @@ import { SingleInputFormComponent } from './login/single-input-form/single-input
     MatFormFieldModule,
     ReactiveFormsModule,
     FormsModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
