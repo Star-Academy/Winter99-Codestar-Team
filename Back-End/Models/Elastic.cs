@@ -8,7 +8,7 @@ namespace Back_End.Models
 
     public class Elastic : IElastic
     {
-        public ElasticClient client { get; set; }
+        public ElasticClient client { get; }
 
         public Elastic(Uri uri)
         {

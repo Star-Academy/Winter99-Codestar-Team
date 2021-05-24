@@ -7,6 +7,8 @@ namespace Back_End.Models
 {
     public interface IElastic
     {
+        public ElasticClient client { get; }
+
         public ElasticClient CreateClient(Uri uri);
 
         public ISearchResponse<T> GetResponseOfQuery<T>(string indexName, QueryContainer queryContainer, int size = 20) where T : class;

@@ -36,6 +36,7 @@ namespace Back_End
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Back_End", Version = "v1" });
             });
             services.AddSingleton<IElastic>(new Elastic(new Uri(ELASTIC_URI)));
+            services.AddSingleton<IUsersService, UsersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
