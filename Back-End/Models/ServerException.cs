@@ -1,6 +1,6 @@
 using System;
 
-namespace SearchApi.Models
+namespace Back_End.Models
 {
     public class ServerException : Exception
     {

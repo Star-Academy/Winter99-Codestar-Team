@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Back_End.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -16,6 +17,8 @@ namespace Back_End
 {
     public class Startup
     {
+        private readonly string ELASTIC_URI = "http://localhost:9200";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,6 +35,7 @@ namespace Back_End
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Back_End", Version = "v1" });
             });
+            services.AddSingleton<IElastic>(new Elastic(new Uri(ELASTIC_URI)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,6 +1,6 @@
 using Nest;
 
-namespace SearchApi.Models
+namespace Back_End.Models
 {
     public static class ValidatorClass
     {

@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Nest;
 
 
-namespace SearchApi.Models
+namespace Back_End.Models
 {
 
-    public class Elastic
+    public class Elastic : IElastic
     {
-        string USERS_INDEX = "users";
-        string ACCOUNTS_INDEX = "accounts";
-        string TRANSACTIONS_INDEX = "transactions";
-
         public ElasticClient client { get; set; }
 
         public Elastic(Uri uri)
@@ -31,7 +26,7 @@ namespace SearchApi.Models
         {
             return client.Search<T>(s => s.Index(indexName).Query(q => queryContainer).Size(size));
         }
-        public static QueryContainer MakeFuzzyQuery(string query, string field, int fuzziness = -1)
+        public QueryContainer MakeFuzzyQuery(string query, string field, int fuzziness = -1)
         {
             return new FuzzyQuery
             {
@@ -41,7 +36,7 @@ namespace SearchApi.Models
             };
         }
 
-        public static QueryContainer MakeMatchQuery(string query, string field, int fuzziness = 0)
+        public QueryContainer MakeMatchQuery(string query, string field, int fuzziness = 0)
         {
             return new MatchQuery
             {
@@ -51,8 +46,7 @@ namespace SearchApi.Models
             };
         }
 
-        public static QueryContainer MakeMultiMatchQuery(string query, string[] fields,
-            int fuzziness = 1)
+        public QueryContainer MakeMultiMatchQuery(string query, string[] fields, int fuzziness = 1)
         {
             return new MultiMatchQuery
             {
@@ -62,7 +56,7 @@ namespace SearchApi.Models
             };
         }
 
-        public static QueryContainer MakeTermQuery(string query, string field, double boost = 1)
+        public QueryContainer MakeTermQuery(string query, string field, double boost = 1)
         {
             return new TermQuery
             {
@@ -72,7 +66,7 @@ namespace SearchApi.Models
             };
         }
 
-        public static QueryContainer MakeTermsQuery(string[] queries, string field, double boost = 1)
+        public QueryContainer MakeTermsQuery(string[] queries, string field, double boost = 1)
         {
             return new TermsQuery
             {
@@ -82,7 +76,7 @@ namespace SearchApi.Models
             };
         }
 
-        public static QueryContainer MakeRangeQuery(string type, string gte, string lte,
+        public QueryContainer MakeRangeQuery(string type, string gte, string lte,
             string field, double boost = 1)
         {
             switch (type.ToLower())
@@ -123,7 +117,7 @@ namespace SearchApi.Models
             }
         }
 
-        public static QueryContainer MakeBoolQuery(QueryContainer[] must = null, QueryContainer[] filter = null,
+        public QueryContainer MakeBoolQuery(QueryContainer[] must = null, QueryContainer[] filter = null,
             QueryContainer[] should = null, QueryContainer[] mustNot = null, double boost = 1)
         {
             return new BoolQuery
@@ -136,7 +130,7 @@ namespace SearchApi.Models
             };
         }
 
-        public static QueryContainer MakeGeoDistanceQuery(string distance, double latitude,
+        public QueryContainer MakeGeoDistanceQuery(string distance, double latitude,
             double longitude, Field distanceField, double boost = 1)
         {
             return new GeoDistanceQuery
@@ -154,7 +148,7 @@ namespace SearchApi.Models
             return client.Search<T>(s => s.Index(indexName).Aggregations(
                 termsAggregation));
         }
-        public static TermsAggregation MakeTermsAggQuery(string field, string name = "", bool keyword = false)
+        public TermsAggregation MakeTermsAggQuery(string field, string name = "", bool keyword = false)
         {
             if (name == "")
                 name = field;
@@ -222,16 +216,6 @@ namespace SearchApi.Models
             return client.Cluster.Health(indexName, healthSelector);
         }
 
-        public static void QueryResponsePrinter<T>(string queryType, ISearchResponse<T> response) where T : class
-        {
-            Console.WriteLine(queryType + " query:  ---------------------");
-            response.Hits.ToList().ForEach(x => Console.WriteLine(x.Source.ToString()));
-        }
-        public static void TermAggResponsePrinter<T>(ISearchResponse<T> response, string name) where T : class
-        {
-            Console.WriteLine(name + " Terms Aggregation:  ---------------------");
-            response.Aggregations.Terms(name).Buckets.ToList().ForEach(x => Console.WriteLine(x.Key + " : " + x.DocCount));
-        }
     }
 }
 
