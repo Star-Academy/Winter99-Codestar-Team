@@ -1,16 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Back_End.Models;
+using Back_End.Bank;
+using Back_End.Elastic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace Back_End
@@ -35,7 +30,7 @@ namespace Back_End
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Back_End", Version = "v1" });
             });
-            services.AddSingleton<IElastic>(new Elastic(new Uri(ELASTIC_URI)));
+            services.AddSingleton<IElastic>(new Elastic.Elastic(new Uri(ELASTIC_URI)));
             services.AddSingleton<IUsersService, UsersService>();
             services.AddSingleton<IBankService, BankService>();
         }

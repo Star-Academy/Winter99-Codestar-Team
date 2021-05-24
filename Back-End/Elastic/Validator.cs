@@ -1,6 +1,6 @@
 using Nest;
 
-namespace Back_End.Models
+namespace Back_End.Elastic
 {
     public static class ValidatorClass
     {
@@ -19,7 +19,8 @@ namespace Back_End.Models
             }
             else if (response.ServerError != null)
             {
-                throw new ServerException($"Sorry something went wrong with the server!\n status: {response.ServerError.Status} \n Error message: {response.ServerError.Error} ");
+                throw new ServerException(
+                    $"Sorry something went wrong with the server!\n status: {response.ServerError.Status} \n Error message: {response.ServerError.Error} ");
             }
         }
     }

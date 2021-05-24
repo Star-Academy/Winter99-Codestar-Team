@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using Nest;
 
-
-namespace Back_End.Models
+namespace Back_End.Elastic
 {
-
     public class Elastic : IElastic
     {
-        public ElasticClient client { get; }
+        public ElasticClient Client { get; }
 
         public Elastic(Uri uri)
         {
-            client = this.CreateClient(uri);
+            Client = this.CreateClient(uri);
         }
 
         public ElasticClient CreateClient(Uri uri)
@@ -22,10 +20,12 @@ namespace Back_End.Models
             return new ElasticClient(connectionSettings);
         }
 
-        public ISearchResponse<T> GetResponseOfQuery<T>(string indexName, QueryContainer queryContainer, int size = 20) where T : class
+        public ISearchResponse<T> GetResponseOfQuery<T>(string indexName, QueryContainer queryContainer, int size = 20)
+            where T : class
         {
-            return client.Search<T>(s => s.Index(indexName).Query(q => queryContainer).Size(size));
+            return Client.Search<T>(s => s.Index(indexName).Query(q => queryContainer).Size(size));
         }
+
         public QueryContainer MakeFuzzyQuery(string query, string field, int fuzziness = -1)
         {
             return new FuzzyQuery
@@ -142,12 +142,14 @@ namespace Back_End.Models
                 Boost = boost
             };
         }
-        public ISearchResponse<T> GetResponseOfAggs<T>(string indexName, TermsAggregation termsAggregation) where T : class
-        {
 
-            return client.Search<T>(s => s.Index(indexName).Aggregations(
+        public ISearchResponse<T> GetResponseOfAggregates<T>(string indexName, TermsAggregation termsAggregation)
+            where T : class
+        {
+            return Client.Search<T>(s => s.Index(indexName).Aggregations(
                 termsAggregation));
         }
+
         public TermsAggregation MakeTermsAggQuery(string field, string name = "", bool keyword = false)
         {
             if (name == "")
@@ -159,19 +161,20 @@ namespace Back_End.Models
         }
 
 
-        public ResponseBase CreateIndex<T>(string indexName, Func<IndexSettingsDescriptor, IPromise<IIndexSettings>> settingSelector = null,
+        public ResponseBase CreateIndex<T>(string indexName,
+            Func<IndexSettingsDescriptor, IPromise<IIndexSettings>> settingSelector = null,
             Func<TypeMappingDescriptor<T>, ITypeMapping> mapSelector = null) where T : class
         {
-            return client.Indices.Create(indexName,
-                s => s.Settings(settingSelector).Map<T>(mapSelector));
+            return Client.Indices.Create(indexName,
+                s => s.Settings(settingSelector).Map(mapSelector));
         }
 
         public ResponseBase DeleteIndex(string indexName)
         {
-            return client.Indices.Delete(indexName);
+            return Client.Indices.Delete(indexName);
         }
 
-        public BulkResponse BulkIndex<T>(string indexName, List<T> dataList, string idFieldName) where T : class
+        public BulkResponse BulkIndex<T>(string indexName, IEnumerable<T> dataList, string idFieldName) where T : class
         {
             var bulkDescriptor = new BulkDescriptor();
             foreach (var data in dataList)
@@ -179,43 +182,44 @@ namespace Back_End.Models
                 bulkDescriptor.Index<T>(x => x
                     .Index(indexName)
                     .Document(data)
-                    .Id((string)data.GetType().GetProperty(idFieldName).GetValue(data))
+                    .Id((string) data.GetType().GetProperty(idFieldName).GetValue(data))
                 );
             }
-            return client.Bulk(bulkDescriptor);
+
+            return Client.Bulk(bulkDescriptor);
         }
 
         public IndexResponse Index<T>(string indexName, T document, string idFieldName) where T : class
         {
-            return client.Index<T>(document, x => x
+            return Client.Index<T>(document, x => x
                 .Index(indexName)
-                .Id((string)document.GetType().GetProperty(idFieldName).GetValue(document)));
+                .Id((string) document.GetType().GetProperty(idFieldName).GetValue(document)));
         }
 
         public T GetDocument<T>(string indexName, string id) where T : class
         {
-            return client.Get<T>(id, g => g.Index(indexName)).Source;
+            return Client.Get<T>(id, g => g.Index(indexName)).Source;
         }
 
         public RefreshResponse Refresh(string indexName)
         {
-            return client.Indices.Refresh(indexName);
+            return Client.Indices.Refresh(indexName);
         }
 
         public CatResponse<CatNodesRecord> GetCatNodes()
         {
-            return client.Cat.Nodes();
+            return Client.Cat.Nodes();
         }
+
         public CatResponse<CatIndicesRecord> GetCatIndices()
         {
-            return client.Cat.Indices();
+            return Client.Cat.Indices();
         }
 
-        public ClusterHealthResponse GetClusterHealth(string indexName, Func<ClusterHealthDescriptor, IClusterHealthRequest> healthSelector = null)
+        public ClusterHealthResponse GetClusterHealth(string indexName,
+            Func<ClusterHealthDescriptor, IClusterHealthRequest> healthSelector = null)
         {
-            return client.Cluster.Health(indexName, healthSelector);
+            return Client.Cluster.Health(indexName, healthSelector);
         }
-
     }
 }
-

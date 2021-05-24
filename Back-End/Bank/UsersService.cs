@@ -1,6 +1,6 @@
-using System;
+using Back_End.Elastic;
 
-namespace Back_End.Models
+namespace Back_End.Bank
 {
     public class UsersService : IUsersService
     {

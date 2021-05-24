@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Nest;
 
-namespace Back_End.Models
+namespace Back_End.Elastic
 {
     public interface IElastic
     {
-        public ElasticClient client { get; }
+        public ElasticClient Client { get; }
 
         public ElasticClient CreateClient(Uri uri);
 
-        public ISearchResponse<T> GetResponseOfQuery<T>(string indexName, QueryContainer queryContainer, int size = 20) where T : class;
+        public ISearchResponse<T> GetResponseOfQuery<T>(string indexName, QueryContainer queryContainer, int size = 20)
+            where T : class;
 
         public QueryContainer MakeFuzzyQuery(string query, string field, int fuzziness = -1);
 
@@ -26,21 +27,23 @@ namespace Back_End.Models
         public QueryContainer MakeRangeQuery(string type, string gte, string lte, string field, double boost = 1);
 
         public QueryContainer MakeBoolQuery(QueryContainer[] must = null, QueryContainer[] filter = null,
-                        QueryContainer[] should = null, QueryContainer[] mustNot = null, double boost = 1);
+            QueryContainer[] should = null, QueryContainer[] mustNot = null, double boost = 1);
 
         public QueryContainer MakeGeoDistanceQuery(string distance, double latitude,
-                        double longitude, Field distanceField, double boost = 1);
+            double longitude, Field distanceField, double boost = 1);
 
-        public ISearchResponse<T> GetResponseOfAggs<T>(string indexName, TermsAggregation termsAggregation) where T : class;
+        public ISearchResponse<T> GetResponseOfAggregates<T>(string indexName, TermsAggregation termsAggregation)
+            where T : class;
 
         public TermsAggregation MakeTermsAggQuery(string field, string name = "", bool keyword = false);
 
-        public ResponseBase CreateIndex<T>(string indexName, Func<IndexSettingsDescriptor, IPromise<IIndexSettings>> settingSelector = null,
+        public ResponseBase CreateIndex<T>(string indexName,
+            Func<IndexSettingsDescriptor, IPromise<IIndexSettings>> settingSelector = null,
             Func<TypeMappingDescriptor<T>, ITypeMapping> mapSelector = null) where T : class;
 
         public ResponseBase DeleteIndex(string indexName);
 
-        public BulkResponse BulkIndex<T>(string indexName, List<T> dataList, string idFieldName) where T : class;
+        public BulkResponse BulkIndex<T>(string indexName, IEnumerable<T> dataList, string idFieldName) where T : class;
 
         public IndexResponse Index<T>(string indexName, T document, string idFieldName) where T : class;
 
@@ -52,17 +55,20 @@ namespace Back_End.Models
 
         public CatResponse<CatIndicesRecord> GetCatIndices();
 
-        public ClusterHealthResponse GetClusterHealth(string indexName, Func<ClusterHealthDescriptor, IClusterHealthRequest> healthSelector = null);
+        public ClusterHealthResponse GetClusterHealth(string indexName,
+            Func<ClusterHealthDescriptor, IClusterHealthRequest> healthSelector = null);
 
         public static void QueryResponsePrinter<T>(string queryType, ISearchResponse<T> response) where T : class
         {
             Console.WriteLine(queryType + " query:  ---------------------");
             response.Hits.ToList().ForEach(x => Console.WriteLine(x.Source.ToString()));
         }
+
         public static void TermAggResponsePrinter<T>(ISearchResponse<T> response, string name) where T : class
         {
             Console.WriteLine(name + " Terms Aggregation:  ---------------------");
-            response.Aggregations.Terms(name).Buckets.ToList().ForEach(x => Console.WriteLine(x.Key + " : " + x.DocCount));
+            response.Aggregations.Terms(name).Buckets.ToList()
+                .ForEach(x => Console.WriteLine(x.Key + " : " + x.DocCount));
         }
     }
 }

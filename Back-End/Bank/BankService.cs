@@ -1,4 +1,6 @@
-namespace Back_End.Models
+using Back_End.Elastic;
+
+namespace Back_End.Bank
 {
     public class BankService : IBankService
     {
