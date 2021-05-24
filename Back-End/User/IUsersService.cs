@@ -1,4 +1,4 @@
-namespace Back_End.Bank
+namespace Back_End.User
 {
     public interface IUsersService
     {

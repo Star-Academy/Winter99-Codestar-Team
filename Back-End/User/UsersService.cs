@@ -1,6 +1,6 @@
 using Back_End.Elastic;
 
-namespace Back_End.Bank
+namespace Back_End.User
 {
     public class UsersService : IUsersService
     {
