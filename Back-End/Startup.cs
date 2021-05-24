@@ -37,6 +37,7 @@ namespace Back_End
             });
             services.AddSingleton<IElastic>(new Elastic(new Uri(ELASTIC_URI)));
             services.AddSingleton<IUsersService, UsersService>();
+            services.AddSingleton<IBankService, BankService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
