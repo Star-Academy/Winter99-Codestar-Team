@@ -379,6 +379,9 @@ obj/
 # Ignore all local history of files
 .history
 
+### VisualStudioCode ###
+.idea/*
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,csharp,dotnetcore
 **/Data
 **/Test-Data
