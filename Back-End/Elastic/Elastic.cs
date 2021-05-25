@@ -221,5 +221,10 @@ namespace Back_End.Elastic
         {
             return Client.Cluster.Health(indexName, healthSelector);
         }
+
+        public bool IndexExists(string indexName)
+        {
+            return Client.Indices.Exists(indexName).Exists;
+        }
     }
 }

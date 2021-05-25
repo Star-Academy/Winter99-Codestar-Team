@@ -70,5 +70,8 @@ namespace Back_End.Elastic
             response.Aggregations.Terms(name).Buckets.ToList()
                 .ForEach(x => Console.WriteLine(x.Key + " : " + x.DocCount));
         }
+
+        public bool IndexExists(string indexName);
+        
     }
 }
