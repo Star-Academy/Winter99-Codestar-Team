@@ -4,14 +4,13 @@ namespace Back_End.Bank
 {
     public class BankService : IBankService
     {
-        readonly string ACCOUNTS_INDEX = "accounts"; // todo : add this to appsettings.json
-        readonly string TRANSACTIONS_INDEX = "transactions"; // todo : add this to appsettings.json
-        private IElastic elastic;
+        private readonly Elastic<Account> _accountsElastic;
+        private readonly Elastic<Transaction> _transactionsElastic;
 
-        public BankService(IElastic elastic)
+        public BankService(Elastic<Account> accountsElastic, Elastic<Transaction> transactionsElastic)
         {
-            this.elastic = elastic;
-            // check and create indices if not created.
+            _accountsElastic = accountsElastic;
+            _transactionsElastic = transactionsElastic;
         }
     }
 }

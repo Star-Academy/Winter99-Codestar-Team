@@ -1,4 +1,4 @@
-﻿using Back_End.Models;
+﻿using Back_End.Bank;
 using TinyCsvParser.Mapping;
 
 namespace Back_End.Preprocessing

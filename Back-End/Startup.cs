@@ -1,4 +1,3 @@
-using System;
 using Back_End.Bank;
 using Back_End.Elastic;
 using Back_End.Users;
@@ -13,7 +12,7 @@ namespace Back_End
 {
     public class Startup
     {
-        private readonly string ELASTIC_URI = "http://localhost:9200";
+        private readonly string ELASTIC_URI = "http://localhost:9200"; // todo : read from appsettings.json
 
         public Startup(IConfiguration configuration)
         {
@@ -25,13 +24,11 @@ namespace Back_End
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Back_End", Version = "v1" });
-            });
-            services.AddSingleton<IElastic>(new Elastic.Elastic(new Uri(ELASTIC_URI)));
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Back_End", Version = "v1"}); });
+            services.AddSingleton<Elastic<User>, UsersElastic>();
+            services.AddSingleton<Elastic<Account>, AccountsElastic>();
+            services.AddSingleton<Elastic<Transaction>, TransactionsElastic>();
             services.AddSingleton<IUsersService, UsersService>();
             services.AddSingleton<IBankService, BankService>();
         }
@@ -52,10 +49,7 @@ namespace Back_End
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

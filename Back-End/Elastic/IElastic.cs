@@ -5,14 +5,14 @@ using Nest;
 
 namespace Back_End.Elastic
 {
-    public interface IElastic
+    public interface IElastic<T> where T : class
     {
+        // todo : remove not useful methods
         public ElasticClient Client { get; }
 
         public ElasticClient CreateClient(Uri uri);
 
-        public ISearchResponse<T> GetResponseOfQuery<T>(string indexName, QueryContainer queryContainer, int size = 20)
-            where T : class;
+        public ISearchResponse<T> GetResponseOfQuery(QueryContainer queryContainer, int size = 20);
 
         public QueryContainer MakeFuzzyQuery(string query, string field, int fuzziness = -1);
 
@@ -32,46 +32,43 @@ namespace Back_End.Elastic
         public QueryContainer MakeGeoDistanceQuery(string distance, double latitude,
             double longitude, Field distanceField, double boost = 1);
 
-        public ISearchResponse<T> GetResponseOfAggregates<T>(string indexName, TermsAggregation termsAggregation)
-            where T : class;
+        public ISearchResponse<T> GetResponseOfAggregates(TermsAggregation termsAggregation);
 
         public TermsAggregation MakeTermsAggQuery(string field, string name = "", bool keyword = false);
 
-        public ResponseBase CreateIndex<T>(string indexName,
-            Func<IndexSettingsDescriptor, IPromise<IIndexSettings>> settingSelector = null,
-            Func<TypeMappingDescriptor<T>, ITypeMapping> mapSelector = null) where T : class;
+        public ResponseBase CreateIndex(Func<IndexSettingsDescriptor, IPromise<IIndexSettings>> settingSelector = null,
+            Func<TypeMappingDescriptor<T>, ITypeMapping> mapSelector = null);
 
         public ResponseBase DeleteIndex(string indexName);
 
-        public BulkResponse BulkIndex<T>(string indexName, IEnumerable<T> dataList, string idFieldName) where T : class;
+        public BulkResponse BulkIndex(IEnumerable<T> dataList, Func<T, string> typeIndexId);
 
-        public IndexResponse Index<T>(string indexName, T document, string idFieldName) where T : class;
+        public IndexResponse Index(T document, Func<T, string> typeIndexId);
 
-        public T GetDocument<T>(string indexName, string id) where T : class;
+        public T GetDocument(string id);
 
-        public RefreshResponse Refresh(string indexName);
+        public RefreshResponse Refresh();
 
         public CatResponse<CatNodesRecord> GetCatNodes();
 
         public CatResponse<CatIndicesRecord> GetCatIndices();
 
-        public ClusterHealthResponse GetClusterHealth(string indexName,
+        public ClusterHealthResponse GetClusterHealth(
             Func<ClusterHealthDescriptor, IClusterHealthRequest> healthSelector = null);
 
-        public static void QueryResponsePrinter<T>(string queryType, ISearchResponse<T> response) where T : class
+        public static void QueryResponsePrinter(string queryType, ISearchResponse<T> response)
         {
             Console.WriteLine(queryType + " query:  ---------------------");
             response.Hits.ToList().ForEach(x => Console.WriteLine(x.Source.ToString()));
         }
 
-        public static void TermAggResponsePrinter<T>(ISearchResponse<T> response, string name) where T : class
+        public static void TermAggResponsePrinter(ISearchResponse<T> response, string name)
         {
             Console.WriteLine(name + " Terms Aggregation:  ---------------------");
             response.Aggregations.Terms(name).Buckets.ToList()
                 .ForEach(x => Console.WriteLine(x.Key + " : " + x.DocCount));
         }
 
-        public bool IndexExists(string indexName);
-        
+        public bool IndexExists();
     }
 }
