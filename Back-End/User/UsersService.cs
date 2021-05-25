@@ -2,6 +2,11 @@ using System.Globalization;
 using Back_End.Elastic;
 using Nest;
 using Back_End.Models;
+using System;
+using System.Linq;
+using System.Text;
+using System.Security.Cryptography;
+
 namespace Back_End.Users
 {
     public class UsersService : IUsersService
@@ -30,6 +35,19 @@ namespace Back_End.Users
                                                 .Number(n => n.
                                                     Name(u => u.Hashed))
                                                 );
+        }
+
+        public string Createhash(string pass, string salt){
+            HashAlgorithm sha = SHA256.Create();
+            return Convert.ToBase64String(sha.ComputeHash(Encoding.Unicode.GetBytes(salt + pass)));
+        }
+
+        public string RandomString(int length)
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }
