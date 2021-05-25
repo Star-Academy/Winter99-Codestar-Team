@@ -1,7 +1,7 @@
 using System;
 using Back_End.Bank;
 using Back_End.Elastic;
-using Back_End.User;
+using Back_End.Users;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
