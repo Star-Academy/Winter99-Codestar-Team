@@ -29,10 +29,16 @@ namespace Back_End.Users
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        public void addUser(User user){
-            user.Salt  = RandomString(50);
+        public void AddUser(User user)
+        {
+            user.Salt = RandomString(50);
             user.Hashed = CreateHash(user.Password, user.Salt);
-            _usersElastic.Index(user, user => user.UserId);
+            _usersElastic.Index(user, user => user.UserId).Validate();
+        }
+
+        public User GetUser(string userId)
+        {
+            return _usersElastic.GetDocument(userId);
         }
     }
 }
