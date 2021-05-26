@@ -50,7 +50,7 @@ namespace Back_End.Controllers
         {
             if (user is null || user.UserId is null || user.Password is null ||
              !_userService.CheckUser(user.UserId, user.Password))
-                return Unauthorized();
+                return Unauthorized("This UserId and Password combination does not exist");
             return Ok();
         }
     }
