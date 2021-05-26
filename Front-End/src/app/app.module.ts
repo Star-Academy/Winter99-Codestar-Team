@@ -12,11 +12,13 @@ import { LoginComponent } from './login/login.component';
 import { SingleInputFormComponent } from './login/single-input-form/single-input-form.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ColorTestComponent } from './color-test/color-test.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, SingleInputFormComponent, ColorTestComponent],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
