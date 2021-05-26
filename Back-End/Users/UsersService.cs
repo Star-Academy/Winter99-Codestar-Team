@@ -53,5 +53,13 @@ namespace Back_End.Users
         {
             return Char.ToLowerInvariant(text[0]) + text.Substring(1);
         }
+
+        public bool CheckUser(string userId, string password)
+        {
+            var user = GetUser(userId);
+            if(user is null || user.Hashed != CreateHash(password, user.Salt)) 
+                return false;
+            return true;
+        }
     }
 }

@@ -8,5 +8,6 @@ namespace Back_End.Users
 
         public bool Exists(string field, string value);
 
+        public bool CheckUser(string userId, string password);
     }
 }

@@ -22,7 +22,7 @@ namespace Back_End.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public ActionResult AddUser([FromBody] User user)
         {
-            if (user is null || user.UserId is null || user.Email is null )
+            if (user is null || user.UserId is null || user.Email is null)
                 return BadRequest(new ArgumentNullException());
             if (_userService.Exists(nameof(user.UserId), user.UserId))
                 return Conflict($"A user with this Id already exists.");
@@ -41,6 +41,17 @@ namespace Back_End.Controllers
             if (user is null)
                 return NotFound();
             return Ok(user);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public ActionResult Login([FromBody] User user)
+        {
+            if (user is null || user.UserId is null || user.Password is null ||
+             !_userService.CheckUser(user.UserId, user.Password))
+                return Unauthorized();
+            return Ok();
         }
     }
 }
