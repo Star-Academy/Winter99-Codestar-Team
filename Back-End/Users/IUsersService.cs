@@ -5,5 +5,8 @@ namespace Back_End.Users
         public void AddUser(User user);
 
         public User GetUser(string userId);
+
+        public bool Exists(string field, string value);
+
     }
 }

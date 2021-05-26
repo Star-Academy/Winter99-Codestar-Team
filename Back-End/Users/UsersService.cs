@@ -40,5 +40,18 @@ namespace Back_End.Users
         {
             return _usersElastic.GetDocument(userId);
         }
+
+        public bool Exists(string field, string value)
+        {
+            var response = _usersElastic.GetResponseOfQuery(_usersElastic.MakeTermQuery(value, MakeCamelCase(field))).Validate();
+            if (response.Hits.Any())
+                return true;
+            return false;
+        }
+
+        public string MakeCamelCase(string text)
+        {
+            return Char.ToLowerInvariant(text[0]) + text.Substring(1);
+        }
     }
 }

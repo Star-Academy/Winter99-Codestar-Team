@@ -19,10 +19,15 @@ namespace Back_End.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<User> AddUser([FromBody] User user)
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public ActionResult AddUser([FromBody] User user)
         {
-            if (user is null)
+            if (user is null || user.UserId is null || user.Email is null )
                 return BadRequest(new ArgumentNullException());
+            if (_userService.Exists(nameof(user.UserId), user.UserId))
+                return Conflict($"A user with this Id already exists.");
+            if (_userService.Exists(nameof(user.Email), user.Email))
+                return Conflict($"A user with this Email already exists.");
             _userService.AddUser(user);
             return CreatedAtAction(nameof(GetUser), new { userId = user.UserId }, user);
         }
