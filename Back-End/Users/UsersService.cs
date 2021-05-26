@@ -28,5 +28,11 @@ namespace Back_End.Users
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
+
+        public void addUser(User user){
+            user.Salt  = RandomString(50);
+            user.Hashed = CreateHash(user.Password, user.Salt);
+            _usersElastic.Index(user, user => user.UserId);
+        }
     }
 }

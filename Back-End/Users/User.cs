@@ -1,4 +1,6 @@
-﻿namespace Back_End.Users
+﻿using Nest;
+
+namespace Back_End.Users
 {
     public class User
     {
@@ -10,5 +12,7 @@
         
         public string Hashed { get; set; }
         
+        [Ignore]
+        public string Password { get; set; }
     }
 }
