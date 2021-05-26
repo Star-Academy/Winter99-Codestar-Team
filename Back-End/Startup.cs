@@ -12,8 +12,6 @@ namespace Back_End
 {
     public class Startup
     {
-        private readonly string ELASTIC_URI = "http://localhost:9200"; // todo : read from appsettings.json
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
