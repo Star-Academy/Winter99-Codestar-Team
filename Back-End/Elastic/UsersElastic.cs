@@ -19,7 +19,8 @@ namespace Back_End.Elastic
                     .Name(u => u.Email))
                 .Keyword(k => k
                     .Name(u => u.Salt))
-                .Number(n => n.Name(u => u.Hashed))
+                .Keyword(k => k
+                    .Name(u => u.Hashed))
             );
         }
     }
