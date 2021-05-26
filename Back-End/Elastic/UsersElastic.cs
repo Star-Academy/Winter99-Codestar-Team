@@ -6,7 +6,7 @@ namespace Back_End.Elastic
 {
     public class UsersElastic : Elastic<User>
     {
-        protected UsersElastic(IConfiguration configuration) : base(configuration, configuration["usersIndex"])
+        public UsersElastic(IConfiguration configuration) : base(configuration, configuration["usersIndex"])
         {
         }
 
