@@ -28,5 +28,38 @@ namespace Back_End.Users
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
+
+        public void AddUser(User user)
+        {
+            user.Salt = RandomString(50);
+            user.Hashed = CreateHash(user.Password, user.Salt);
+            _usersElastic.Index(user, user => user.UserId).Validate();
+        }
+
+        public User GetUser(string userId)
+        {
+            return _usersElastic.GetDocument(userId);
+        }
+
+        public bool Exists(string field, string value)
+        {
+            var response = _usersElastic.GetResponseOfQuery(_usersElastic.MakeTermQuery(value, MakeCamelCase(field))).Validate();
+            if (response.Hits.Any())
+                return true;
+            return false;
+        }
+
+        public string MakeCamelCase(string text)
+        {
+            return Char.ToLowerInvariant(text[0]) + text.Substring(1);
+        }
+
+        public bool CheckUser(string userId, string password)
+        {
+            var user = GetUser(userId);
+            if(user is null || user.Hashed != CreateHash(password, user.Salt)) 
+                return false;
+            return true;
+        }
     }
 }
