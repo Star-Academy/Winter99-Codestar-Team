@@ -57,9 +57,14 @@ namespace Back_End.Users
         public bool CheckUser(string userId, string password)
         {
             var user = GetUser(userId);
-            if(user is null || user.Hashed != CreateHash(password, user.Salt)) 
+            if (user is null || user.Hashed != CreateHash(password, user.Salt))
                 return false;
             return true;
+        }
+
+        public Session CreateSession()
+        {
+            return new Session(RandomString(50));
         }
     }
 }
