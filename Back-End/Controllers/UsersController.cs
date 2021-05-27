@@ -46,12 +46,25 @@ namespace Back_End.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public ActionResult Login([FromBody] User user)
+        public ActionResult<Session> Login([FromBody] User user)
         {
             if (user is null || user.UserId is null || user.Password is null ||
              !_userService.CheckUser(user.UserId, user.Password))
                 return Unauthorized("This UserId and Password combination does not exist");
-            return Ok();
+            var session = _userService.CreateSession();
+            HttpContext.Session.SetString(session.SessionId, user.UserId);
+            return Ok(session);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult ValidateSession([FromBody] Session session)
+        {
+            var userId = HttpContext.Session.GetString(session.SessionId);
+            if (userId is null)
+                return NotFound();
+            return Ok(userId);
         }
     }
 }
