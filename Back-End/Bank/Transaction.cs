@@ -6,32 +6,40 @@ namespace Back_End.Bank
     public class Transaction
     {
         private static readonly string TIME_FORMAT = "HH:mm:ss" ,DATE_FORMAT = "MM/dd/yyyy" ;
+        public string Id { get; set; }
+        public string SrcAccountId { get; set; }
+        public string DestAccountId { get; set; }
+
         private DateTime _date;
-        public string SourceAccountId { get; set; }
-        public string DestinationAccountId { get; set; }
-
-        public void SetDate(DateTime value)
-        {
-            _date = value;
-        }
-
         public DateTime GetDate()
         {
             return _date;
         }
-
-        public void SetDate(string timeString)
+        public void SetDate(DateTime date)
         {
-            SetDate(DateTime.ParseExact(timeString, DATE_FORMAT,null));
+            _date = date;
         }
-        public DateTime Time { get; set; } // todo : type correction
+        public void SetDate(string dateString)
+        {
+            SetDate(DateTime.ParseExact(dateString, DATE_FORMAT,null));
+        }
+
+        private DateTime _time;
+        public DateTime GetTime()
+        {
+            return _time;
+        }
+        public void SetTime(DateTime time)
+        {
+            _time = time;
+        }
         public void SetTime(string timeString)
         {
-            Time = DateTime.ParseExact(timeString, TIME_FORMAT,null);
+            SetTime(DateTime.ParseExact(timeString, TIME_FORMAT,null));
         }
+        
         public string TrackingId { get; set; }
         public long Amount { get; set; }
         public string Type { get; set; }
-        public string TransactionId { get; set; }
     }
 }

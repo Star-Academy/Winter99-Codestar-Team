@@ -7,14 +7,14 @@ namespace Back_End.Preprocessing
     {
         public CsvTransactionMapping()
         {
-            MapProperty(0, transaction => transaction.SourceAccountId);
-            MapProperty(1, transaction => transaction.DestinationAccountId);
+            MapProperty(0, transaction => transaction.SrcAccountId);
+            MapProperty(1, transaction => transaction.DestAccountId);
             MapProperty(2, transaction => transaction.GetDate());
-            MapProperty(3, transaction => transaction.Time);
+            MapProperty(3, transaction => transaction.GetTime());
             MapProperty(4, transaction => transaction.TrackingId);
             MapProperty(5, transaction => transaction.Amount);
             MapProperty(6, transaction => transaction.Type);
-            MapProperty(7, transaction => transaction.TransactionId);
+            MapProperty(7, transaction => transaction.Id);
         }
     }
 }

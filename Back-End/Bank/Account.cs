@@ -31,7 +31,7 @@ namespace Back_End.Bank
         public string OwnerId { get; set; }
 
         public List<string> SrcTransactions { get; set; }
+        public List<string> DestTransactions { get; set; }
         
-        //todo 
     }
 }

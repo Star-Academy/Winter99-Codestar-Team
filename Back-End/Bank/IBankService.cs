@@ -1,16 +1,21 @@
+using System;
 using System.Collections.Generic;
+using Back_End.Users;
 
 namespace Back_End.Bank
 {
     public interface IBankService
     {
+        public Account GetAccount(string accountId) ;
         public List<Transaction> GetDestTransactions(string accountId) ;
-        public List<Transaction> GetSrcTransactions(string accountId) ;
-        public Dictionary<string,Account> GetAccounts(string transactionId) ;
-
-        public bool PushAccount(Account account);
-        public bool PushTransaction(Transaction destTransaction , Transaction srcTransaction);
+        public List<Transaction> GetSrcTransactions(string accountId) ; 
+        public List<Account> GetDestAccounts(string accountId) ;
+        public List<Account> GetSrcAccounts(string accountId) ;
+        public bool PostAccount(Account account);
         
-
+        public Transaction GetTransaction(string transactionId) ;
+        public Tuple<Account,Account> GetAccounts(string transactionId) ; /*returns src,dest */
+        public bool PostTransaction(Transaction transaction);
+        
     }
 }
