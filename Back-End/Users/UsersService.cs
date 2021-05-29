@@ -15,15 +15,15 @@ namespace Back_End.Users
             _usersElastic = usersElastic;
         }
 
-        public string CreateHash(string pass, string salt)
+        private static string CreateHash(string pass, string salt)
         {
-            HashAlgorithm sha = SHA256.Create();
+            var sha = SHA256.Create();
             return Convert.ToBase64String(sha.ComputeHash(Encoding.Unicode.GetBytes(salt + pass)));
         }
 
-        public string RandomString(int length)
+        private static string RandomString(int length)
         {
-            Random random = new Random();
+            var random = new Random();
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
@@ -33,7 +33,7 @@ namespace Back_End.Users
         {
             user.Salt = RandomString(50);
             user.Hashed = CreateHash(user.Password, user.Salt);
-            _usersElastic.Index(user, user => user.UserId).Validate();
+            _usersElastic.Index(user, userType => userType.UserId).Validate();
         }
 
         public User GetUser(string userId)
@@ -44,22 +44,18 @@ namespace Back_End.Users
         public bool Exists(string field, string value)
         {
             var response = _usersElastic.GetResponseOfQuery(_usersElastic.MakeTermQuery(value, MakeCamelCase(field))).Validate();
-            if (response.Hits.Any())
-                return true;
-            return false;
+            return response.Hits.Any();
         }
 
-        public string MakeCamelCase(string text)
+        private static string MakeCamelCase(string text)
         {
-            return Char.ToLowerInvariant(text[0]) + text.Substring(1);
+            return char.ToLowerInvariant(text[0]) + text[1..];
         }
 
         public bool CheckUser(string userId, string password)
         {
             var user = GetUser(userId);
-            if (user is null || user.Hashed != CreateHash(password, user.Salt))
-                return false;
-            return true;
+            return user is not null && user.Hashed == CreateHash(password, user.Salt);
         }
 
         public Session CreateSession()
