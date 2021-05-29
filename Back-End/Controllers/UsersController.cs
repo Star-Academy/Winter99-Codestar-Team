@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 namespace Back_End.Controllers
 {
     [ApiController]
-    [Route("[controller]/[action]")]
+    [Route("api/v1/[controller]/[action]")]
     public class UsersController : ControllerBase
     {
         private readonly IUsersService _userService;
