@@ -9,7 +9,7 @@ namespace Back_End.Controllers
     [Route("[controller]/[action]")]
     public class UsersController : ControllerBase
     {
-        IUsersService _userService;
+        private readonly IUsersService _userService;
 
         public UsersController(IUsersService userService)
         {
@@ -22,14 +22,14 @@ namespace Back_End.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public ActionResult AddUser([FromBody] User user)
         {
-            if (user is null || user.UserId is null || user.Email is null)
-                return BadRequest(new ArgumentNullException());
+            if (user?.UserId is null || user.Email is null)
+                return BadRequest(new ArgumentNullException(nameof(user)));
             if (_userService.Exists(nameof(user.UserId), user.UserId))
                 return Conflict($"A user with this Id already exists.");
             if (_userService.Exists(nameof(user.Email), user.Email))
                 return Conflict($"A user with this Email already exists.");
             _userService.AddUser(user);
-            return CreatedAtAction(nameof(GetUser), new { userId = user.UserId }, user);
+            return CreatedAtAction(nameof(GetUser), new {userId = user.UserId}, user);
         }
 
         [HttpGet("{userId}", Name = nameof(GetUser))]
@@ -48,8 +48,7 @@ namespace Back_End.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<Session> Login([FromBody] User user)
         {
-            if (user is null || user.UserId is null || user.Password is null ||
-             !_userService.CheckUser(user.UserId, user.Password))
+            if (user?.UserId is null || user.Password is null || !_userService.CheckUser(user.UserId, user.Password))
                 return Unauthorized("This UserId and Password combination does not exist");
             var session = _userService.CreateSession();
             HttpContext.Session.SetString(session.SessionId, user.UserId);
