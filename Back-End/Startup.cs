@@ -24,13 +24,14 @@ namespace Back_End
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Back_End", Version = "v1" }); });
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Back_End", Version = "v1"}); });
             services.AddSingleton<Elastic<User>, UsersElastic>();
             services.AddSingleton<Elastic<Account>, AccountsElastic>();
             services.AddSingleton<Elastic<Transaction>, TransactionsElastic>();
             services.AddSingleton<IUsersService, UsersService>();
             services.AddSingleton<IBankService, BankService>();
-           
+            services.AddSingleton<IUserAuthenticationManager, UserAuthenticationManger>();
+
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
