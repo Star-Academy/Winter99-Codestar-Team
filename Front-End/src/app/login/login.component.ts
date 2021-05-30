@@ -1,13 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormValues } from './single-input-form/models/formValues';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
-  constructor() {}
+export class LoginComponent {
+  public readonly getUsernameFormValues: FormValues = new FormValues(
+    'نام کاربری',
+    'text',
+    (username: string) => {
+      console.log('getUsernameFormValues');
+      console.log(username);
+      localStorage.setItem('username', username);
+    },
+    [],
+    'ایجاد حساب کاربری',
+    '#'
+  );
 
-  ngOnInit(): void {}
+  public readonly getPasswordFormValues: FormValues = new FormValues(
+    'رمز عبور',
+    'password',
+    (password: string) => {
+      console.log('getPasswordFormValues');
+      console.log(password);
+      localStorage.getItem('username');
+    },
+    [],
+    'فراموشی رمز عبور',
+    '#'
+  );
 }

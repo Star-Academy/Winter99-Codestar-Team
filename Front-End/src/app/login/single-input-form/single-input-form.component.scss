@@ -1,46 +1,58 @@
 .container {
-  min-width: 100vw;
+  min-width: 100%;
   min-height: 100vh;
   display: grid;
-  grid-template-columns: auto 547px auto;
-  grid-template-rows: auto 80% auto;
+  grid-template-columns: auto 531px auto;
+  grid-template-rows: auto 702px auto;
+  transition: opacity 300ms ease-out;
 }
 .container > form {
   grid-column: 2;
   grid-row: 2;
-  min-height: 700px;
   text-align: center;
   border: 1px solid black;
   border-radius: 100px;
+  display: grid;
+  grid-template-rows: 41px 200px 41px 66px 66px 41px 105px 41px auto;
 }
-.form-title {
-  margin-top: 12%;
+.title-container {
+  grid-row: 2;
   display: block;
   width: 100%;
   text-align: center;
 }
-.form-title > p {
-  font-size: 120px;
+.title-container > p {
+  font-size: 9rem;
   font-family: narenj;
+  line-height: inherit;
 }
-.input {
-  margin-top: 12%;
-  height: 60px;
-  width: 339px;
-  font-size: 1.2em;
+.input-container {
+  grid-row: 4;
+  width: 100%;
 }
-.link {
-  margin-top: 10%;
-  display: block;
+.input-container > mat-form-field {
+  width: 70%;
+  font-size: 1em;
+}
+.link-container {
+  grid-row: 6;
   width: 100%;
   text-align: center;
 }
-.link > a {
-  font-size: 1.3em;
+.link-container > a {
+  font-size: 1.2rem;
 }
-form > .button {
-  margin-top: 25%;
-  font-size: 31px;
-  width: 209px;
-  height: 48px;
+.button-container {
+  grid-row: 8;
+  width: 100%;
+}
+.button-container > button {
+  font-size: 1.2rem;
+  width: 50%;
+}
+.visible {
+  opacity: 100%;
+}
+.invisible {
+  opacity: 0;
 }

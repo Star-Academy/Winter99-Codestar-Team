@@ -1,26 +1,36 @@
-<div class="container">
-  <form onsubmit="" dir="rtl">
-    <div class="form-title">
+<div class="container" [ngClass]="formVisibility">
+  <form onsubmit="" dir="rtl" (submit)="clickButton()">
+    <div class="title-container">
       <p>برنامه</p>
     </div>
-    <mat-form-field class="input" appearance="outline">
-      <mat-label> {{ inputName }} </mat-label>
-      <input [type]="getInputType()" matInput [formControl]="inputControl" />
-      <button
-        *ngIf="inputType == 'password'"
-        mat-icon-button
-        matSuffix
-        (click)="hideInputValue = !hideInputValue"
-      >
-        <mat-icon>
-          {{ hideInputValue ? "visibility" : "visibility_off" }}
-        </mat-icon>
-      </button>
-      <!-- <mat-error>hello</mat-error> -->
-    </mat-form-field>
-    <div class="link" *ngIf="linkText && linkHref">
-      <a href="{{ linkHref }}" mat-button>{{ linkText }}</a>
+    <div class="input-container">
+      <mat-form-field appearance="outline">
+        <mat-label> {{ formValues.inputName }} </mat-label>
+        <input [type]="inputType" matInput [formControl]="inputControl" />
+        <button
+          *ngIf="formValues.inputType == 'password'"
+          mat-icon-button
+          matSuffix
+          (click)="hideInputValue = !hideInputValue"
+          type="button"
+        >
+          <mat-icon>
+            {{ hideInputValue ? "visibility" : "visibility_off" }}
+          </mat-icon>
+        </button>
+        <mat-error>{{ validationErrorMessage }}</mat-error>
+      </mat-form-field>
     </div>
-    <button mat-stroked-button class="button">ادامه</button>
+    <div
+      class="link-container"
+      *ngIf="formValues.linkText && formValues.linkHref"
+    >
+      <a href="{{ formValues.linkHref }}" mat-button>{{
+        formValues.linkText
+      }}</a>
+    </div>
+    <div class="button-container">
+      <button type="submit" mat-stroked-button>ادامه</button>
+    </div>
   </form>
 </div>
