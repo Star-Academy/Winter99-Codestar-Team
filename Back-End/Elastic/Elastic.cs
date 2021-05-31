@@ -7,9 +7,12 @@ namespace Back_End.Elastic
 {
     public abstract class Elastic<T> : IElastic<T> where T : class
     {
+        //todo add a method for delete elements (necessary?)
+        //todo add a method for update elements 
+        
         private readonly string _indexName;
         public ElasticClient Client { get; }
-
+        
         protected Elastic(IConfiguration configuration, string indexName)
         {
             _indexName = indexName;
@@ -84,8 +87,7 @@ namespace Back_End.Elastic
             };
         }
 
-        public QueryContainer MakeRangeQuery(string type, string gte, string lte,
-            string field, double boost = 1)
+        public QueryContainer MakeRangeQuery(string type, string gte, string lte, string field, double boost = 1)
         {
             switch (type.ToLower())
             {
@@ -125,8 +127,7 @@ namespace Back_End.Elastic
             }
         }
 
-        public QueryContainer MakeBoolQuery(QueryContainer[] must = null, QueryContainer[] filter = null,
-            QueryContainer[] should = null, QueryContainer[] mustNot = null, double boost = 1)
+        public QueryContainer MakeBoolQuery(QueryContainer[] must = null, QueryContainer[] filter = null, QueryContainer[] should = null, QueryContainer[] mustNot = null, double boost = 1)
         {
             return new BoolQuery
             {
@@ -138,8 +139,7 @@ namespace Back_End.Elastic
             };
         }
 
-        public QueryContainer MakeGeoDistanceQuery(string distance, double latitude,
-            double longitude, Field distanceField, double boost = 1)
+        public QueryContainer MakeGeoDistanceQuery(string distance, double latitude, double longitude, Field distanceField, double boost = 1)
         {
             return new GeoDistanceQuery
             {
@@ -222,8 +222,7 @@ namespace Back_End.Elastic
             return Client.Cat.Indices();
         }
 
-        public ClusterHealthResponse GetClusterHealth(
-            Func<ClusterHealthDescriptor, IClusterHealthRequest> healthSelector = null)
+        public ClusterHealthResponse GetClusterHealth( Func<ClusterHealthDescriptor, IClusterHealthRequest> healthSelector = null)
         {
             return Client.Cluster.Health(_indexName, healthSelector);
         }

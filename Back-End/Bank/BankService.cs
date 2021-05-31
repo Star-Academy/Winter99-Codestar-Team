@@ -41,6 +41,7 @@ namespace Back_End.Bank
             account.DestTransactions.ForEach(destTransactionId =>destAccountsList.Add(GetAccount(GetTransaction(destTransactionId).DestAccountId)));
             return destAccountsList;
         }
+        
         public List<Transaction> GetSrcTransactions(string accountId)
         {
             Account account = GetAccount(accountId);
@@ -61,7 +62,7 @@ namespace Back_End.Bank
             return srcAccountsList;
         }
 
-        public bool PostAccount(Account account)
+        public bool InsertAccount(Account account)
         {
             Account tempAccount = GetAccount(account.Id);
             if (tempAccount != null)
@@ -77,6 +78,29 @@ namespace Back_End.Bank
             }
             return true;
         }
+        
+        public bool DeleteAccount(Account account)
+        {
+            Account tempAccount = GetAccount(account.Id);
+            if (tempAccount != null)
+                return false;
+            try
+            {
+                _accountsElastic.Index(account, x => x.Id).Validate();
+            }
+            catch (Exception e)
+            {
+                //todo log error
+                return false;
+            }
+            return true;
+        }
+
+        public bool UpdateAccount(Account account)
+        {
+            return DeleteAccount(account) && InsertAccount(account);
+        }
+        
 
         // ******************************************* transactions ******************************************* //
         public Transaction GetTransaction(string transactionId)

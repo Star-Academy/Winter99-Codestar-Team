@@ -11,7 +11,9 @@ namespace Back_End.Bank
         public List<Transaction> GetSrcTransactions(string accountId) ; 
         public List<Account> GetDestAccounts(string accountId) ;
         public List<Account> GetSrcAccounts(string accountId) ;
-        public bool PostAccount(Account account);
+        public bool InsertAccount(Account account);
+        public bool DeleteAccount(Account account);
+        public bool UpdateAccount(Account account);
         
         public Transaction GetTransaction(string transactionId) ;
         public Tuple<Account,Account> GetAccounts(string transactionId) ; /*returns src,dest */

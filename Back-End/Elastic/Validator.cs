@@ -22,6 +22,7 @@ namespace Back_End.Elastic
                 throw new ServerException(
                     $"Sorry something went wrong with the server!\n status: {response.ServerError.Status} \n Error message: {response.ServerError.Error} ");
             }
+            
         }
     }
 }
