@@ -14,10 +14,12 @@ namespace Back_End.Bank
         public bool InsertAccount(Account account);
         public bool DeleteAccount(Account account);
         public bool UpdateAccount(Account account);
+        public bool AccountExists(string field, string value);
         
         public Transaction GetTransaction(string transactionId) ;
         public Tuple<Account,Account> GetAccounts(string transactionId) ; /*returns src,dest */
-        public bool PostTransaction(Transaction transaction);
-        
+        public bool InsertTransaction(Transaction transaction);
+        public bool TransactionExists(string field, string value);
+
     }
 }

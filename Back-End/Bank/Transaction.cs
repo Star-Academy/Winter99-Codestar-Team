@@ -5,37 +5,23 @@ namespace Back_End.Bank
 {
     public class Transaction
     {
-        private static readonly string TIME_FORMAT = "HH:mm:ss" ,DATE_FORMAT = "MM/dd/yyyy" ;
+        private static readonly string TimeFormat = "HH:mm:ss", DateFormat = "MM/dd/yyyy";
         public string Id { get; set; }
         public string SrcAccountId { get; set; }
         public string DestAccountId { get; set; }
-
-        private DateTime _date;
-        public DateTime GetDate()
+        
+        public DateTime? Date { get; set; }
+        public string StrDate
         {
-            return _date;
-        }
-        public void SetDate(DateTime date)
-        {
-            _date = date;
-        }
-        public void SetDate(string dateString)
-        {
-            SetDate(DateTime.ParseExact(dateString, DATE_FORMAT,null));
+            get => Date?.ToString(DateFormat);
+            set => Date =DateTime.ParseExact(value, DateFormat,null);
         }
 
-        private DateTime _time;
-        public DateTime GetTime()
+        public DateTime? Time { get; set; }
+        public string StrTime
         {
-            return _time;
-        }
-        public void SetTime(DateTime time)
-        {
-            _time = time;
-        }
-        public void SetTime(string timeString)
-        {
-            SetTime(DateTime.ParseExact(timeString, TIME_FORMAT,null));
+            get => Time?.ToString(TimeFormat);
+            set => Time =DateTime.ParseExact(value, TimeFormat,null);
         }
         
         public string TrackingId { get; set; }

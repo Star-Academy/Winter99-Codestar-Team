@@ -1,5 +1,6 @@
 using System.Linq;
 using Back_End.Elastic;
+using Back_End.StaticServices;
 
 namespace Back_End.Users
 {
@@ -28,15 +29,11 @@ namespace Back_End.Users
 
         public bool Exists(string field, string value)
         {
-            var response = _usersElastic.GetResponseOfQuery(_usersElastic.MakeTermQuery(value, MakeCamelCase(field)))
+            var response = _usersElastic.GetResponseOfQuery(_usersElastic.MakeTermQuery(value, StringStuffs.MakeCamelCase(field)))
                 .Validate();
             return response.Hits.Any();
         }
-
-        private static string MakeCamelCase(string text)
-        {
-            return char.ToLowerInvariant(text[0]) + text[1..];
-        }
+        
 
         public bool CheckUser(string userId, string password)
         {

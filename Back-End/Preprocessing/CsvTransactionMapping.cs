@@ -9,8 +9,8 @@ namespace Back_End.Preprocessing
         {
             MapProperty(0, transaction => transaction.SrcAccountId);
             MapProperty(1, transaction => transaction.DestAccountId);
-            MapProperty(2, transaction => transaction.GetDate());
-            MapProperty(3, transaction => transaction.GetTime());
+            MapProperty(2, transaction => transaction.StrDate);
+            MapProperty(3, transaction => transaction.StrTime);
             MapProperty(4, transaction => transaction.TrackingId);
             MapProperty(5, transaction => transaction.Amount);
             MapProperty(6, transaction => transaction.Type);

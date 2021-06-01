@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Back_End.Elastic;
+using Back_End.StaticServices;
 
 namespace Back_End.Bank
 {
@@ -8,6 +10,7 @@ namespace Back_End.Bank
     {
         private readonly Elastic<Account> _accountsElastic;
         private readonly Elastic<Transaction> _transactionsElastic;
+        private IBankService _bankServiceImplementation;
 
         public BankService(Elastic<Account> accountsElastic, Elastic<Transaction> transactionsElastic)
         {
@@ -28,7 +31,8 @@ namespace Back_End.Bank
             if (account == null)
                 return null;
             List<Transaction> destTransactionsList = new List<Transaction>();
-            account.DestTransactions.ForEach(destTransactionId =>destTransactionsList.Add(GetTransaction(destTransactionId)));
+            account.DestTransactions.ForEach(destTransactionId =>
+                destTransactionsList.Add(GetTransaction(destTransactionId)));
             return destTransactionsList;
         }
 
@@ -38,17 +42,19 @@ namespace Back_End.Bank
             if (account == null)
                 return null;
             List<Account> destAccountsList = new List<Account>();
-            account.DestTransactions.ForEach(destTransactionId =>destAccountsList.Add(GetAccount(GetTransaction(destTransactionId).DestAccountId)));
+            account.DestTransactions.ForEach(destTransactionId =>
+                destAccountsList.Add(GetAccount(GetTransaction(destTransactionId).DestAccountId)));
             return destAccountsList;
         }
-        
+
         public List<Transaction> GetSrcTransactions(string accountId)
         {
             Account account = GetAccount(accountId);
             if (account == null)
                 return null;
             List<Transaction> srcTransactionsList = new List<Transaction>();
-            account.SrcTransactions.ForEach(srcTransactionId =>srcTransactionsList.Add(GetTransaction(srcTransactionId)));
+            account.SrcTransactions.ForEach(srcTransactionId =>
+                srcTransactionsList.Add(GetTransaction(srcTransactionId)));
             return srcTransactionsList;
         }
 
@@ -58,7 +64,8 @@ namespace Back_End.Bank
             if (account == null)
                 return null;
             List<Account> srcAccountsList = new List<Account>();
-            account.SrcTransactions.ForEach(srcTransactionId =>srcAccountsList.Add(GetAccount(GetTransaction(srcTransactionId).SrcAccountId)));
+            account.SrcTransactions.ForEach(srcTransactionId =>
+                srcAccountsList.Add(GetAccount(GetTransaction(srcTransactionId).SrcAccountId)));
             return srcAccountsList;
         }
 
@@ -76,9 +83,10 @@ namespace Back_End.Bank
                 //todo log error
                 return false;
             }
+
             return true;
         }
-        
+
         public bool DeleteAccount(Account account)
         {
             Account tempAccount = GetAccount(account.Id);
@@ -93,6 +101,7 @@ namespace Back_End.Bank
                 //todo log error
                 return false;
             }
+
             return true;
         }
 
@@ -100,7 +109,15 @@ namespace Back_End.Bank
         {
             return DeleteAccount(account) && InsertAccount(account);
         }
-        
+
+        public bool AccountExists(string field, string value)
+        {
+            var response = _accountsElastic
+                .GetResponseOfQuery(_accountsElastic.MakeTermQuery(value, StringStuffs.MakeCamelCase(field)))
+                .Validate();
+            return response.Hits.Any();
+        }
+
 
         // ******************************************* transactions ******************************************* //
         public Transaction GetTransaction(string transactionId)
@@ -125,10 +142,10 @@ namespace Back_End.Bank
             }
         }
 
-        public bool PostTransaction(Transaction transaction)
+        public bool InsertTransaction(Transaction transaction)
         {
             //todo may be it needs a better error handling...
-            
+
             Account srcAccount = GetAccount(transaction.SrcAccountId);
             Account destAccount = GetAccount(transaction.DestAccountId);
             Transaction tempTransaction = GetTransaction(transaction.Id);
@@ -151,6 +168,14 @@ namespace Back_End.Bank
             }
 
             return true;
+        }
+
+        public bool TransactionExists(string field, string value)
+        {
+            var response = _accountsElastic
+                .GetResponseOfQuery(_accountsElastic.MakeTermQuery(value, StringStuffs.MakeCamelCase(field)))
+                .Validate();
+            return response.Hits.Any();
         }
     }
 }
