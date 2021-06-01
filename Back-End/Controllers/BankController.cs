@@ -74,7 +74,7 @@ namespace Back_End.Controllers
 
             try
             {
-                account.ValidateBasicValues();
+                account.ValidateProperties();
             }
             catch (ArgumentElementNullException e)
             {
@@ -106,7 +106,7 @@ namespace Back_End.Controllers
 
             try
             {
-                transaction.ValidateBasicValues();
+                transaction.ValidateProperties();
             }
             catch (ArgumentElementNullException e)
             {

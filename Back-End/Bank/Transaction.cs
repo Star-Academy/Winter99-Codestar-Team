@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Back_End.Bank
 {
@@ -30,22 +31,17 @@ namespace Back_End.Bank
         public long Amount { get; set; }
         public string Type { get; set; }
 
-        public void ValidateBasicValues()
+        public void ValidateProperties()
         {
-            if (Id is null)
-                throw new ArgumentException(nameof(Id));
-            if (SrcAccountId is null)
-                throw new ArgumentException(nameof(SrcAccountId));
-            if (DestAccountId is null)
-                throw new ArgumentException(nameof(DestAccountId));
-            if (Type is null)
-                throw new ArgumentException(nameof(Type));
-            if (TrackingId is null)
-                throw new ArgumentException(nameof(TrackingId));
-            if (Date is null)
-                throw new ArgumentException(nameof(Date));
-            if (Time is null)
-                throw new ArgumentException(nameof(Time));
+            var emptyProperties = GetType()
+                .GetProperties()
+                .Where(info => info.GetValue(this) is null)
+                .Select(info => info.Name)
+                .ToList();
+            if (emptyProperties.Any())
+            {
+                throw new ArgumentElementNullException(emptyProperties.Single());
+            }
         }
     }
 }

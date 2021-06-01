@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Back_End.Bank
 {
@@ -39,28 +39,17 @@ namespace Back_End.Bank
         public List<string> SrcTransactions { get; set; }
         public List<string> DestTransactions { get; set; }
 
-        public void ValidateBasicValues()
+        public void ValidateProperties()
         {
-            if (Id is null)
-                throw new ArgumentElementNullException(nameof(Id));
-            if (Sheba is null)
-                throw new ArgumentElementNullException(nameof(Sheba));
-            if (CardId is null)
-                throw new ArgumentElementNullException(nameof(CardId));
-            if (Type is null)
-                throw new ArgumentElementNullException(nameof(Type));
-            if (BranchAddress is null)
-                throw new ArgumentElementNullException(nameof(BranchAddress));
-            if (BranchName is null)
-                throw new ArgumentElementNullException(nameof(BranchName));
-            if (BranchTelephone is null)
-                throw new ArgumentElementNullException(nameof(BranchTelephone));
-            if (OwnerId is null)
-                throw new ArgumentElementNullException(nameof(OwnerId));
-            if (OwnerFamily is null)
-                throw new ArgumentElementNullException(nameof(OwnerFamily));
-            if (OwnerName is null)
-                throw new ArgumentElementNullException(nameof(OwnerName));
+            var emptyProperties = GetType()
+                .GetProperties()
+                .Where(info => info.GetValue(this) is null)
+                .Select(info => info.Name)
+                .ToList();
+            if (emptyProperties.Any())
+            {
+                throw new ArgumentElementNullException(emptyProperties.Single());
+            }
         }
     }
 }
