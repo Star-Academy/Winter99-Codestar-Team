@@ -10,24 +10,10 @@ import { FormValues } from '../models/formValues';
 export class SingleInputFormComponent implements OnInit {
   public inputControl: FormControl;
   public hideInputValue: boolean;
-  public formVisibility: string;
-  private visibleClassName: string = 'visible';
-  private invisibleClassName: string = 'invisible';
-
-  public get inputType(): string {
-    const visibleType =
-      this.formValues.inputType == 'password'
-        ? 'text'
-        : this.formValues.inputType;
-    return this.hideInputValue ? 'password' : visibleType;
-  }
-
   @Input()
   formValues: FormValues;
 
-  constructor() {
-    this.formVisibility = this.visibleClassName;
-  }
+  constructor() {}
 
   ngOnInit() {
     if (!this.formValues) {
@@ -35,6 +21,14 @@ export class SingleInputFormComponent implements OnInit {
     }
     this.inputControl = new FormControl('', this.formValues.inputValidators);
     this.hideInputValue = this.formValues.inputType == 'password';
+  }
+
+  public get inputType(): string {
+    const visibleType =
+      this.formValues.inputType == 'password'
+        ? 'text'
+        : this.formValues.inputType;
+    return this.hideInputValue ? 'password' : visibleType;
   }
 
   public get validationErrorMessage(): string {
@@ -45,21 +39,10 @@ export class SingleInputFormComponent implements OnInit {
     return errorMessage;
   }
 
-  toggleVisibility() {
-    this.formVisibility =
-      this.formVisibility == this.visibleClassName
-        ? this.invisibleClassName
-        : this.visibleClassName;
-  }
-
   clickButton() {
     if (this.inputControl.errors) {
       throw new Error('Input validation failed.');
     }
-    this.toggleVisibility();
     this.formValues.onSubmit(this.inputControl.value);
-    setTimeout(() => {
-      this.toggleVisibility();
-    }, 1000);
   }
 }

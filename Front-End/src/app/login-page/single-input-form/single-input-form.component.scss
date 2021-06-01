@@ -4,7 +4,6 @@
   display: grid;
   grid-template-columns: auto 531px auto;
   grid-template-rows: auto 702px auto;
-  transition: opacity 300ms ease-out;
 }
 .container > form {
   grid-column: 2;
@@ -49,10 +48,4 @@
 .button-container > button {
   font-size: 1.2rem;
   width: 50%;
-}
-.visible {
-  opacity: 100%;
-}
-.invisible {
-  opacity: 0;
 }

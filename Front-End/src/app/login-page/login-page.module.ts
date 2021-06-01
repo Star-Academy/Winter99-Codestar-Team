@@ -5,19 +5,23 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { LoginPageComponent } from './login-page/login-page.component';
+import { LoginPageRoutingModule } from './login-page-routing.module';
+import { LoginPageComponent } from './login-page.component';
 import { SingleInputFormComponent } from './single-input-form/single-input-form.component';
+import { UsernameFormComponent } from './username-form/username-form.component';
+import { PasswordFormComponent } from './password-form/password-form.component';
 
 @NgModule({
-  declarations: [LoginPageComponent, SingleInputFormComponent],
+  declarations: [LoginPageComponent, SingleInputFormComponent, UsernameFormComponent, PasswordFormComponent],
   imports: [
     CommonModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
     FormsModule,
+    LoginPageRoutingModule,
+    MatButtonModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
+    ReactiveFormsModule,
   ],
   exports: [LoginPageComponent],
 })
