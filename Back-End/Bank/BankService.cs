@@ -10,7 +10,6 @@ namespace Back_End.Bank
     {
         private readonly Elastic<Account> _accountsElastic;
         private readonly Elastic<Transaction> _transactionsElastic;
-        private IBankService _bankServiceImplementation;
 
         public BankService(Elastic<Account> accountsElastic, Elastic<Transaction> transactionsElastic)
         {
@@ -27,51 +26,40 @@ namespace Back_End.Bank
 
         public List<Transaction> GetDestTransactions(string accountId)
         {
-            Account account = GetAccount(accountId);
-            if (account == null)
-                return null;
-            List<Transaction> destTransactionsList = new List<Transaction>();
-            account.DestTransactions.ForEach(destTransactionId =>
-                destTransactionsList.Add(GetTransaction(destTransactionId)));
-            return destTransactionsList;
+            return GetAccount(accountId)?
+                .DestTransactions
+                .Select(GetTransaction)
+                .ToList();
         }
 
         public List<Account> GetDestAccounts(string accountId)
         {
-            Account account = GetAccount(accountId);
-            if (account == null)
-                return null;
-            List<Account> destAccountsList = new List<Account>();
-            account.DestTransactions.ForEach(destTransactionId =>
-                destAccountsList.Add(GetAccount(GetTransaction(destTransactionId).DestAccountId)));
-            return destAccountsList;
+            return GetAccount(accountId)?.DestTransactions
+                .Select(transactionId => GetTransaction(transactionId).DestAccountId)
+                .Select(GetAccount)
+                .ToList();
         }
 
         public List<Transaction> GetSrcTransactions(string accountId)
         {
-            Account account = GetAccount(accountId);
-            if (account == null)
-                return null;
-            List<Transaction> srcTransactionsList = new List<Transaction>();
-            account.SrcTransactions.ForEach(srcTransactionId =>
-                srcTransactionsList.Add(GetTransaction(srcTransactionId)));
-            return srcTransactionsList;
+            return GetAccount(accountId)?
+                .SrcTransactions
+                .Select(GetTransaction)
+                .ToList();
         }
 
         public List<Account> GetSrcAccounts(string accountId)
         {
-            Account account = GetAccount(accountId);
-            if (account == null)
-                return null;
-            List<Account> srcAccountsList = new List<Account>();
-            account.SrcTransactions.ForEach(srcTransactionId =>
-                srcAccountsList.Add(GetAccount(GetTransaction(srcTransactionId).SrcAccountId)));
-            return srcAccountsList;
+            return GetAccount(accountId)?
+                .SrcTransactions
+                .Select(transactionId => GetTransaction(transactionId).DestAccountId)
+                .Select(GetAccount)
+                .ToList();
         }
 
         public bool InsertAccount(Account account)
         {
-            Account tempAccount = GetAccount(account.Id);
+            var tempAccount = GetAccount(account.Id);
             if (tempAccount != null)
                 return false;
             try
@@ -146,9 +134,9 @@ namespace Back_End.Bank
         {
             //todo may be it needs a better error handling...
 
-            Account srcAccount = GetAccount(transaction.SrcAccountId);
-            Account destAccount = GetAccount(transaction.DestAccountId);
-            Transaction tempTransaction = GetTransaction(transaction.Id);
+            var srcAccount = GetAccount(transaction.SrcAccountId);
+            var destAccount = GetAccount(transaction.DestAccountId);
+            var tempTransaction = GetTransaction(transaction.Id);
             if (srcAccount == null || destAccount == null || tempTransaction != null)
                 return false;
             srcAccount.SrcTransactions.Add(transaction.Id);
