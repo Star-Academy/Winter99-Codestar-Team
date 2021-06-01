@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { FormValues } from './models/formValues';
+import { FormValues } from '../models/formValues';
 
 @Component({
   selector: 'app-single-input-form',

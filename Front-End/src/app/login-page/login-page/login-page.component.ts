@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormValues } from './single-input-form/models/formValues';
+import { FormValues } from '../models/formValues';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-login-page',
+  templateUrl: './login-page.component.html',
+  styleUrls: ['./login-page.component.scss'],
 })
-export class LoginComponent {
+export class LoginPageComponent implements OnInit {
+  constructor() {}
+
+  ngOnInit(): void {}
+
   public readonly getUsernameFormValues: FormValues = new FormValues(
     'نام کاربری',
     'text',
