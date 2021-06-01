@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Back_End.Bank
 {
     public class Account
     {
-        public Account(string id, string cardId, string sheba, string type, string branchTelephone, string branchAddress, string branchName, string ownerName, string ownerFamily, string ownerId)
+        // todo : remove it if not required
+        public Account(string id, string cardId, string sheba, string type, string branchTelephone,
+            string branchAddress, string branchName, string ownerName, string ownerFamily, string ownerId)
         {
             Id = id;
             CardId = cardId;
@@ -17,8 +20,11 @@ namespace Back_End.Bank
             OwnerFamily = ownerFamily;
             OwnerId = ownerId;
         }
-        
-        public Account(){}
+
+        public Account()
+        {
+        }
+
         public string Id { get; set; }
         public string CardId { get; set; }
         public string Sheba { get; set; }
@@ -32,13 +38,29 @@ namespace Back_End.Bank
 
         public List<string> SrcTransactions { get; set; }
         public List<string> DestTransactions { get; set; }
-        
-    }
 
-    public class BriefAccount
-    {
-        public string Id { get; set; }
-        public string OwnerName { get; set; }
-        public string OwnerFamily { get; set; }
+        public void ValidateBasicValues()
+        {
+            if (Id is null)
+                throw new ArgumentElementNullException(nameof(Id));
+            if (Sheba is null)
+                throw new ArgumentElementNullException(nameof(Sheba));
+            if (CardId is null)
+                throw new ArgumentElementNullException(nameof(CardId));
+            if (Type is null)
+                throw new ArgumentElementNullException(nameof(Type));
+            if (BranchAddress is null)
+                throw new ArgumentElementNullException(nameof(BranchAddress));
+            if (BranchName is null)
+                throw new ArgumentElementNullException(nameof(BranchName));
+            if (BranchTelephone is null)
+                throw new ArgumentElementNullException(nameof(BranchTelephone));
+            if (OwnerId is null)
+                throw new ArgumentElementNullException(nameof(OwnerId));
+            if (OwnerFamily is null)
+                throw new ArgumentElementNullException(nameof(OwnerFamily));
+            if (OwnerName is null)
+                throw new ArgumentElementNullException(nameof(OwnerName));
+        }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using Back_End.Bank;
-using Back_End.Users;
+﻿using Back_End.Bank;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +8,7 @@ namespace Back_End.Controllers
     [Route("[controller]/[action]")]
     public class BankController : ControllerBase
     {
-        IBankService _bankService;
+        private readonly IBankService _bankService;
 
         public BankController(IBankService bankService)
         {
@@ -47,7 +45,7 @@ namespace Back_End.Controllers
         public ActionResult GetGraph([FromQuery] string srcAccountId, [FromQuery] string destAccountId,
             [FromQuery] int depth)
         {
-            //todo get bfs graph and maxflow
+            //todo get bfs graph and max flow
             return null;
         }
 
@@ -69,26 +67,20 @@ namespace Back_End.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public ActionResult AddUser([FromBody] Account account)
         {
-            if (account?.Id is null)
-                return BadRequest(new ArgumentNullException(nameof(account.Id)));
-            else if (account.Sheba is null)
-                return BadRequest(new ArgumentNullException(nameof(account.Sheba)));
-            else if (account.CardId is null)
-                return BadRequest(new ArgumentNullException(nameof(account.CardId)));
-            else if (account.Type is null)
-                return BadRequest(new ArgumentNullException(nameof(account.Type)));
-            else if (account.BranchAddress is null)
-                return BadRequest(new ArgumentNullException(nameof(account.BranchAddress)));
-            else if (account.BranchName is null)
-                return BadRequest(new ArgumentNullException(nameof(account.BranchName)));
-            else if (account.BranchTelephone is null)
-                return BadRequest(new ArgumentNullException(nameof(account.BranchTelephone)));
-            else if (account.OwnerId is null)
-                return BadRequest(new ArgumentNullException(nameof(account.OwnerId)));
-            else if (account.OwnerFamily is null)
-                return BadRequest(new ArgumentNullException(nameof(account.OwnerFamily)));
-            else if (account.OwnerName is null)
-                return BadRequest(new ArgumentNullException(nameof(account.OwnerName)));
+            if (account is null)
+            {
+                return BadRequest("Argument is null");
+            }
+
+            try
+            {
+                account.ValidateBasicValues();
+            }
+            catch (ArgumentElementNullException e)
+            {
+                return BadRequest(e.Message);
+            }
+
 
             if (_bankService.AccountExists(nameof(account.Id), account.Id))
                 return Conflict($"A transaction with {account.Id} {nameof(account.Id)} already exists.");
@@ -97,7 +89,7 @@ namespace Back_End.Controllers
             if (_bankService.AccountExists(nameof(account.Sheba), account.Sheba))
                 return Conflict($"A transaction with {account.Sheba} {nameof(account.Sheba)} already exists.");
 
-            _bankService.InsertAccount(account);
+            _bankService.InsertAccount(account); // todo : return result of this action to the client
             return CreatedAtAction(nameof(GetAccount), new {accountId = account.Id}, account);
         }
 
@@ -107,32 +99,30 @@ namespace Back_End.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public ActionResult AddTransaction([FromBody] Transaction transaction)
         {
-            if (transaction?.Id is null)
-                return BadRequest(new ArgumentNullException(nameof(transaction.Id)));
-            if (transaction.SrcAccountId is null)
-                return BadRequest(new ArgumentNullException(nameof(transaction.SrcAccountId)));
-            else if (transaction.DestAccountId is null)
-                return BadRequest(new ArgumentNullException(nameof(transaction.DestAccountId)));
-            else if (transaction.Type is null)
-                return BadRequest(new ArgumentNullException(nameof(transaction.Type)));
-            else if (transaction.TrackingId is null)
-                return BadRequest(new ArgumentNullException(nameof(transaction.TrackingId)));
-            else if (transaction.Amount == 0)
-                return BadRequest(new ArgumentNullException(nameof(transaction.Amount)));
-            else if (transaction.Date is null)
-                return BadRequest(new ArgumentNullException(nameof(transaction.Date)));
-            else if (transaction.Time is null)
-                return BadRequest(new ArgumentNullException(nameof(transaction.Time)));
+            if (transaction is null)
+            {
+                return BadRequest("Argument is null");
+            }
+
+            try
+            {
+                transaction.ValidateBasicValues();
+            }
+            catch (ArgumentElementNullException e)
+            {
+                return BadRequest(e.Message);
+            }
 
             if (_bankService.TransactionExists(nameof(transaction.Id), transaction.Id))
                 return Conflict($"A transaction with {transaction.Id} {nameof(transaction.Id)} already exists.");
             if (_bankService.TransactionExists(nameof(transaction.TrackingId), transaction.TrackingId))
-                return Conflict($"A transaction with {transaction.TrackingId} {nameof(transaction.TrackingId)} already exists.");
+                return Conflict(
+                    $"A transaction with {transaction.TrackingId} {nameof(transaction.TrackingId)} already exists.");
 
-            _bankService.InsertTransaction(transaction);
+            _bankService.InsertTransaction(transaction); // todo : return result of this action to the client 
             return CreatedAtAction(nameof(GetTransaction), new {transactionId = transaction.Id}, transaction);
         }
-        
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
