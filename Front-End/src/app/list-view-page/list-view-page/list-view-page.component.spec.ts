@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ColorTestComponent } from './color-test.component';
+import { ListViewPageComponent } from './list-view-page.component';
 
-describe('ColorTestComponent', () => {
-  let component: ColorTestComponent;
-  let fixture: ComponentFixture<ColorTestComponent>;
+describe('ListViewPageComponent', () => {
+  let component: ListViewPageComponent;
+  let fixture: ComponentFixture<ListViewPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ColorTestComponent ]
+      declarations: [ ListViewPageComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ColorTestComponent);
+    fixture = TestBed.createComponent(ListViewPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

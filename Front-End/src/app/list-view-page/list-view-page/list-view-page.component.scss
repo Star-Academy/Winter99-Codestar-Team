@@ -1,0 +1,24 @@
+.container {
+  display: grid;
+  grid-template-columns: 59px auto 108px;
+  width: 100%;
+  min-height: 100vh;
+}
+.expanded-right-menu {
+  grid-template-columns: 59px auto 560px;
+}
+.content {
+  background-color: aqua;
+  grid-column: 2;
+}
+.navigation-menu {
+  background-color: blueviolet;
+  position: sticky;
+  grid-column: 3;
+}
+.filter-menu {
+  background-color: brown;
+  position: fixed;
+  left: 0;
+  top: 0;
+}

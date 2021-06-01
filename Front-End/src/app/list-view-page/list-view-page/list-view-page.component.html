@@ -1,0 +1,8 @@
+<div class="container" [ngClass]="containerClasses">
+  <app-filter-menu [ngClass]="rightMenuClasses"></app-filter-menu>
+  <app-transactions-list [ngClass]="contentClasses"></app-transactions-list>
+  <app-site-navigation-menu
+    [ngClass]="leftMenuClasses"
+    (theEvent)="RightMenuToggle($event)"
+  ></app-site-navigation-menu>
+</div>
