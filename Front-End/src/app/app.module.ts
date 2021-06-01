@@ -15,6 +15,8 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SingleInputFormComponent } from './login/single-input-form/single-input-form.component';
 
+import { CookieService } from 'ngx-cookie-service';
+
 @NgModule({
   declarations: [AppComponent, LoginComponent, SingleInputFormComponent],
   imports: [
@@ -30,7 +32,7 @@ import { SingleInputFormComponent } from './login/single-input-form/single-input
     MatIconModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
