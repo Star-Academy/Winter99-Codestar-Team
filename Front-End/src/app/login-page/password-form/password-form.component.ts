@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormValues } from '../models/formValues';
 
 @Component({
@@ -7,19 +8,21 @@ import { FormValues } from '../models/formValues';
     '<app-single-input-form [formValues]="getPasswordFormValues"></app-single-input-form>',
 })
 export class PasswordFormComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
   public readonly getPasswordFormValues: FormValues = new FormValues(
     'رمز عبور',
     'password',
     (password: string) => {
-      console.log('getPasswordFormValues');
-      console.log(password);
-      localStorage.getItem('username');
+      console.log('PasswordFormComponent submit works.');
+      this.router.navigate(['listview']);
     },
-    [],
-    'فراموشی رمز عبور',
-    '#'
+    []
+    // 'فراموشی رمز عبور',
+    // '#'
   );
+
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    console.log(localStorage.getItem('username'));
+  }
 }
