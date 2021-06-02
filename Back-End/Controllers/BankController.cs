@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Back_End.Controllers
 {
     [ApiController]
-    [Route("[controller]/[action]")]
+    [Route("api/v1/[controller]/[action]")]
     public class BankController : ControllerBase
     {
         private readonly IBankService _bankService;
