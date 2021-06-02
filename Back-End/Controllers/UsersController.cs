@@ -32,6 +32,7 @@ namespace Back_End.Controllers
             return CreatedAtAction(nameof(GetUser), new {userId = user.UserId}, user);
         }
 
+        // todo : security issue (every one with only user id can get user info)  
         [HttpGet("{userId}", Name = nameof(GetUser))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
