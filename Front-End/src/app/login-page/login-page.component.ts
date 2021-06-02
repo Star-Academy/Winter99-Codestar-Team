@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormValues } from './models/formValues';
 
 @Component({
   selector: 'app-login-page',

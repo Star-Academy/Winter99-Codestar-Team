@@ -12,7 +12,12 @@ import { UsernameFormComponent } from './username-form/username-form.component';
 import { PasswordFormComponent } from './password-form/password-form.component';
 
 @NgModule({
-  declarations: [LoginPageComponent, SingleInputFormComponent, UsernameFormComponent, PasswordFormComponent],
+  declarations: [
+    LoginPageComponent,
+    SingleInputFormComponent,
+    UsernameFormComponent,
+    PasswordFormComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -23,6 +28,5 @@ import { PasswordFormComponent } from './password-form/password-form.component';
     MatInputModule,
     ReactiveFormsModule,
   ],
-  exports: [LoginPageComponent],
 })
 export class LoginPageModule {}

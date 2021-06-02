@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SiteNavigationMenuModule } from '../site-navigation-menu/site-navigation-menu.module';
+import { ListViewPageComponent } from './list-view-page.component';
 import { FilterMenuComponent } from './filter-menu/filter-menu.component';
 import { TransactionsListComponent } from './transactions-list/transactions-list.component';
-import { ListViewPageComponent } from './list-view-page/list-view-page.component';
-import { SiteNavigationMenuModule } from '../site-navigation-menu/site-navigation-menu.module';
+import { ListViewPageRoutingModule } from './list-view-page-routing.module';
 
 @NgModule({
   declarations: [
-    FilterMenuComponent,
     TransactionsListComponent,
     ListViewPageComponent,
+    FilterMenuComponent,
   ],
-  imports: [CommonModule, SiteNavigationMenuModule],
-  exports: [ListViewPageComponent],
+  imports: [CommonModule, SiteNavigationMenuModule, ListViewPageRoutingModule],
 })
 export class ListViewPageModule {}
