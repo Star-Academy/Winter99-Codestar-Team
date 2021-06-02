@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Back_End.Controllers
 {
     [ApiController]
-    [Route("[controller]/[action]")]
+    [Route("api/v1/[controller]/[action]")]
     public class BankController : ControllerBase
     {
         private readonly IBankService _bankService;
@@ -18,19 +18,20 @@ namespace Back_End.Controllers
         [HttpGet("{accountId}", Name = nameof(GetAccount))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Account> GetAccount(string accountId)
+        public ActionResult<SummaryAccount> GetAccount(string accountId)
         {
             //todo a new format for transaction without src and dest transactions
             var account = _bankService.GetAccount(accountId);
             if (account is null)
                 return NotFound();
-            return Ok(account);
+            return Ok(SummaryAccount.Convert(account));
         }
 
+        
         [HttpGet("{transactionId}", Name = nameof(GetTransaction))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Account> GetTransaction(string transactionId)
+        public ActionResult<Transaction> GetTransaction(string transactionId)
         {
             var transaction = _bankService.GetTransaction(transactionId);
             if (transaction is null)
