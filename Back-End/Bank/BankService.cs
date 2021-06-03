@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Back_End.Elastic;
 using Back_End.StaticServices;
+using Nest;
 
 namespace Back_End.Bank
 {
@@ -18,6 +19,16 @@ namespace Back_End.Bank
         }
 
         // ******************************************* accounts ******************************************* //
+
+        public IEnumerable<Account> SearchAccount(string query)
+        {
+            return _accountsElastic.QueryResponseList(
+                         _accountsElastic.GetResponseOfQuery(_accountsElastic.MakeMultiMatchQuery(
+                             query,new[] {nameof(Account.Id), nameof(Account.Sheba), nameof(Account.CardId), nameof(Account.OwnerId)}
+                             )
+                         )
+            );
+        }
 
         public Account GetAccount(string accountId)
         {
@@ -68,7 +79,21 @@ namespace Back_End.Bank
             }
             catch (Exception e)
             {
-                //todo log error
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool InsertAccounts(IEnumerable<Account> accounts)
+        {
+            //todo: bulk doesnt check old indexes for duplicates
+            try
+            {
+                _accountsElastic.BulkIndex(accounts, x => x.Id).Validate();
+            }
+            catch (Exception e)
+            {
                 return false;
             }
 
@@ -82,11 +107,10 @@ namespace Back_End.Bank
                 return false;
             try
             {
-                _accountsElastic.Index(account, x => x.Id).Validate();
+                _accountsElastic.DeleteIndex(account.Id).Validate();
             }
             catch (Exception e)
             {
-                //todo log error
                 return false;
             }
 
@@ -152,6 +176,21 @@ namespace Back_End.Bank
             catch (Exception e)
             {
                 //todo log error
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool InsertTransactions(IEnumerable<Transaction> transactions)
+        {
+            //todo: bulk doesnt check old indexes for duplicates
+            try
+            {
+                _transactionsElastic.BulkIndex(transactions, x => x.Id).Validate();
+            }
+            catch (Exception e)
+            {
                 return false;
             }
 

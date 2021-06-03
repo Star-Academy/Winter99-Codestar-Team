@@ -6,12 +6,14 @@ namespace Back_End.Bank
 {
     public interface IBankService
     {
+        public IEnumerable<Account> SearchAccount(string query) ;
         public Account GetAccount(string accountId) ;
         public List<Transaction> GetDestTransactions(string accountId) ;
         public List<Transaction> GetSrcTransactions(string accountId) ; 
         public List<Account> GetDestAccounts(string accountId) ;
         public List<Account> GetSrcAccounts(string accountId) ;
         public bool InsertAccount(Account account);
+        public bool InsertAccounts(IEnumerable<Account> account);
         public bool DeleteAccount(Account account);
         public bool UpdateAccount(Account account);
         public bool AccountExists(string field, string value);
@@ -19,6 +21,7 @@ namespace Back_End.Bank
         public Transaction GetTransaction(string transactionId) ;
         public Tuple<Account,Account> GetAccounts(string transactionId) ; /*returns src,dest */
         public bool InsertTransaction(Transaction transaction);
+        public bool InsertTransactions(IEnumerable<Transaction> transactions);
         public bool TransactionExists(string field, string value);
 
     }

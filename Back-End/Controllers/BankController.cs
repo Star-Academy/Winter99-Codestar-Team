@@ -1,6 +1,10 @@
-﻿using Back_End.Bank;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Back_End.Bank;
+using Back_End.Preprocessing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Nest;
 
 namespace Back_End.Controllers
 {
@@ -9,28 +13,41 @@ namespace Back_End.Controllers
     public class BankController : ControllerBase
     {
         private readonly IBankService _bankService;
+        private readonly ICsvPreprocessor _csvPreprocessor;
 
         public BankController(IBankService bankService)
         {
             _bankService = bankService;
+            _csvPreprocessor  = new TinyCsvPreprocessor();;
         }
 
         [HttpGet("{accountId}", Name = nameof(GetAccount))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Account> GetAccount(string accountId)
+        public ActionResult<SummaryAccount> GetAccount(string accountId)
         {
-            //todo a new format for transaction without src and dest transactions
+           
             var account = _bankService.GetAccount(accountId);
             if (account is null)
                 return NotFound();
-            return Ok(account);
+            return Ok(SummaryAccount.Convert(account));
         }
-
+        
+        [HttpGet( Name = nameof(SearchAccount))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<IEnumerable<SummaryAccount>> SearchAccount([FromQuery]string query)
+        {
+            var accounts = _bankService.SearchAccount(query);
+            if (accounts is null || !accounts.Any())
+                return NotFound();
+            return Ok(SummaryAccount.Convert(accounts));
+        }
+        
         [HttpGet("{transactionId}", Name = nameof(GetTransaction))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Account> GetTransaction(string transactionId)
+        public ActionResult<Transaction> GetTransaction(string transactionId)
         {
             var transaction = _bankService.GetTransaction(transactionId);
             if (transaction is null)
@@ -57,7 +74,7 @@ namespace Back_End.Controllers
             //todo edit parameters
         {
             //todo get neighbors
-
+            //use class nodeNeighbors
             return null;
         }
 
@@ -71,7 +88,6 @@ namespace Back_End.Controllers
             {
                 return BadRequest("Argument is null");
             }
-
             try
             {
                 account.ValidateProperties();
@@ -80,8 +96,7 @@ namespace Back_End.Controllers
             {
                 return BadRequest(e.Message);
             }
-
-
+            
             if (_bankService.AccountExists(nameof(account.Id), account.Id))
                 return Conflict($"A transaction with {account.Id} {nameof(account.Id)} already exists.");
             if (_bankService.AccountExists(nameof(account.CardId), account.CardId))
@@ -103,7 +118,6 @@ namespace Back_End.Controllers
             {
                 return BadRequest("Argument is null");
             }
-
             try
             {
                 transaction.ValidateProperties();
@@ -127,18 +141,32 @@ namespace Back_End.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public ActionResult AddUsers()
+        public ActionResult AddUsers([FromBody] string csv)
         {
-            return null;
+            var accounts = _csvPreprocessor.ParseAccounts(csv);
+            if (accounts is null || !accounts.Any())
+            {
+                return BadRequest("Bad request to bulk accounts.");
+            }
+
+            _bankService.InsertAccounts(accounts);
+            return Created("", "Accounts Inserted");
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public ActionResult AddTransactions()
+        public ActionResult AddTransactions([FromBody] string csv)
         {
-            return null;
+            var transactions = _csvPreprocessor.ParseTransactions(csv);
+            if (transactions is null || !transactions.Any())
+            {
+                return BadRequest("Bad request to bulk transactions.");
+            }
+
+            _bankService.InsertTransactions(transactions);
+            return Created("", "Transactions Inserted");
         }
     }
 }
