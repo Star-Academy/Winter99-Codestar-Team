@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 const routes: Routes = [
   {
     path: 'login',
-    loadChildren: () =>
-      import('./login-page/login-page.module').then((m) => m.LoginPageModule),
+    component: LoginPageComponent,
   },
   {
     path: 'listview',

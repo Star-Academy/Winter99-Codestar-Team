@@ -1,1 +1,9 @@
-<router-outlet></router-outlet>
+<app-single-input-form
+[formValues]="getUsernameFormValues"
+*ngIf="formName == 'username'; else password"
+></app-single-input-form>
+<ng-template #password>
+  <app-single-input-form
+    [formValues]="getPasswordFormValues"
+  ></app-single-input-form>
+</ng-template>
