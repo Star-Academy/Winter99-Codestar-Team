@@ -56,11 +56,7 @@ namespace Back_End.Elastic
         public ClusterHealthResponse GetClusterHealth(
             Func<ClusterHealthDescriptor, IClusterHealthRequest> healthSelector = null);
 
-        public static void QueryResponsePrinter(string queryType, ISearchResponse<T> response)
-        {
-            Console.WriteLine(queryType + " query:  ---------------------");
-            response.Hits.ToList().ForEach(x => Console.WriteLine(x.Source.ToString()));
-        }
+        public IEnumerable<T> QueryResponseList(ISearchResponse<T> response);
 
         public static void TermAggResponsePrinter(ISearchResponse<T> response, string name)
         {

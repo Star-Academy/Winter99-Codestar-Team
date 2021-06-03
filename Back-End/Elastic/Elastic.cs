@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Nest;
 
@@ -7,8 +8,6 @@ namespace Back_End.Elastic
 {
     public abstract class Elastic<T> : IElastic<T> where T : class
     {
-        //todo add a method for delete elements (necessary?)
-        //todo add a method for update elements 
         
         private readonly string _indexName;
         public ElasticClient Client { get; }
@@ -225,6 +224,13 @@ namespace Back_End.Elastic
         public ClusterHealthResponse GetClusterHealth( Func<ClusterHealthDescriptor, IClusterHealthRequest> healthSelector = null)
         {
             return Client.Cluster.Health(_indexName, healthSelector);
+        }
+
+        public IEnumerable<T> QueryResponseList(ISearchResponse<T> response)
+        {
+            List<T> list = new List<T>();
+            response.Hits.ToList().ForEach(x => list.Add(x.Source));
+            return (IEnumerable<T>) list;
         }
 
         public bool IndexExists()
