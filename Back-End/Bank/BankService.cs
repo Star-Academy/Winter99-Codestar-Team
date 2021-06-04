@@ -43,10 +43,10 @@ namespace Back_End.Bank
                 .ToList();
         }
 
-        public List<Account> GetDestAccounts(string accountId)
+        public List<Account> GetDestTransactionsSources(string accountId)
         {
             return GetAccount(accountId)?.DestTransactions
-                .Select(transactionId => GetTransaction(transactionId).DestAccountId)
+                .Select(transactionId => GetTransaction(transactionId).SrcAccountId)
                 .Select(GetAccount)
                 .ToList();
         }
@@ -59,7 +59,7 @@ namespace Back_End.Bank
                 .ToList();
         }
 
-        public List<Account> GetSrcAccounts(string accountId)
+        public List<Account> GetSrcTransactionsDestinations(string accountId)
         {
             return GetAccount(accountId)?
                 .SrcTransactions

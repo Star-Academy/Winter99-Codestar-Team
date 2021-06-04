@@ -10,8 +10,8 @@ namespace Back_End.Bank
         public Account GetAccount(string accountId) ;
         public List<Transaction> GetDestTransactions(string accountId) ;
         public List<Transaction> GetSrcTransactions(string accountId) ; 
-        public List<Account> GetDestAccounts(string accountId) ;
-        public List<Account> GetSrcAccounts(string accountId) ;
+        public List<Account> GetDestTransactionsSources(string accountId) ;
+        public List<Account> GetSrcTransactionsDestinations(string accountId) ;
         public bool InsertAccount(Account account);
         public bool InsertAccounts(IEnumerable<Account> account);
         public bool DeleteAccount(Account account);
