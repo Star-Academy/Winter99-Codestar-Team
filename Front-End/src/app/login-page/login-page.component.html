@@ -1,6 +1,6 @@
 <app-single-input-form
-[formValues]="getUsernameFormValues"
-*ngIf="formName == 'username'; else password"
+  [formValues]="getUsernameFormValues"
+  *ngIf="formName == 'username'; else password"
 ></app-single-input-form>
 <ng-template #password>
   <app-single-input-form

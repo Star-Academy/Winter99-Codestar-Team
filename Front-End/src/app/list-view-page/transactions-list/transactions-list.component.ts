@@ -1,15 +1,277 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Transaction } from '../models/Transaction';
 
 @Component({
   selector: 'app-transactions-list',
   templateUrl: './transactions-list.component.html',
-  styleUrls: ['./transactions-list.component.scss']
+  styleUrls: ['./transactions-list.component.scss'],
 })
 export class TransactionsListComponent implements OnInit {
+  // @Input()
+  public transactions: Transaction[] = [
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '12345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '32345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '323654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+    {
+      id: '22345678',
+      sourceAccountId: '1234567890',
+      destinationAccountId: '0987654321',
+      amount: '123654852',
+      dateTime: new Date(1996, 3, 8, 15, 2),
+    },
+  ];
 
-  constructor() { }
+  displayedColumns: string[] = [
+    'id',
+    'amount',
+    'date',
+    'destination',
+    'source',
+  ];
 
-  ngOnInit(): void {
-  }
+  constructor() {}
 
+  ngOnInit(): void {}
 }

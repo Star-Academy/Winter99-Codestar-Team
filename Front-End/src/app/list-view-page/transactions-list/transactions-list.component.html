@@ -1,2 +1,30 @@
-<p>transactions-list works!</p>
-<!-- don't follow xd file's coloring -->
+<div class="container" dir="rtl">
+  <table mat-table [dataSource]="transactions">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>شماره مرجع</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef>مقدار تراکنش</th>
+      <td mat-cell *matCellDef="let element">{{ element.amount }}</td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>تاریخ تراکنش</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.dateTime.toDateString() }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="source">
+      <th mat-header-cell *matHeaderCellDef>حساب مبدا</th>
+      <td mat-cell *matCellDef="let element">{{ element.sourceAccountId }}</td>
+    </ng-container>
+    <ng-container matColumnDef="destination">
+      <th mat-header-cell *matHeaderCellDef>حساب مقصد</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.destinationAccountId }}
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

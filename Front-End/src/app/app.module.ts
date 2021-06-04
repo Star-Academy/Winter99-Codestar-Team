@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CookieService } from 'ngx-cookie-service';
@@ -16,6 +17,7 @@ import { ListViewPageComponent } from './list-view-page/list-view-page.component
 import { TransactionsListComponent } from './list-view-page/transactions-list/transactions-list.component';
 import { FilterMenuComponent } from './list-view-page/filter-menu/filter-menu.component';
 import { SiteNavigationMenuComponent } from './site-navigation-menu/site-navigation-menu.component';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { SiteNavigationMenuComponent } from './site-navigation-menu/site-navigat
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatSortModule,
+    MatTableModule,
     ReactiveFormsModule,
   ],
   providers: [CookieService],
