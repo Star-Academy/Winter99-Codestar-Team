@@ -51,5 +51,15 @@ namespace Back_End.Bank
                 throw new ArgumentElementNullException(emptyProperties.Single());
             }
         }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return (obj as Account)?.Id == Id;
+        }
     }
 }
