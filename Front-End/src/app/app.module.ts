@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CookieService } from 'ngx-cookie-service';
@@ -17,7 +18,8 @@ import { ListViewPageComponent } from './list-view-page/list-view-page.component
 import { TransactionsListComponent } from './list-view-page/transactions-list/transactions-list.component';
 import { FilterMenuComponent } from './list-view-page/filter-menu/filter-menu.component';
 import { SiteNavigationMenuComponent } from './site-navigation-menu/site-navigation-menu.component';
-import { MatSortModule } from '@angular/material/sort';
+import { FiltersListComponent } from './list-view-page/filter-menu/filters-list/filters-list.component';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { MatSortModule } from '@angular/material/sort';
     ListViewPageComponent,
     FilterMenuComponent,
     SiteNavigationMenuComponent,
+    FiltersListComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -41,6 +44,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatInputModule,
     MatSortModule,
     MatTableModule,
+    NgScrollbarModule,
     ReactiveFormsModule,
   ],
   providers: [CookieService],
