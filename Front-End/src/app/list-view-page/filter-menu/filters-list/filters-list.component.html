@@ -1,13 +1,11 @@
 <div class="container">
-  <ng-scrollbar dir="rtl" class="sb">
-    <div class="filter-card" *ngFor="let filter of filters; index as i">
-      <button mat-icon-button class="remove-button" (click)="removeFilter(i)">
-        <mat-icon>highlight_off</mat-icon>
-      </button>
-      <div class="filter" *ngFor="let keyValue of getFilterValues(filter)">
-        <p class="filter-type">{{ keyValue.key }}:</p>
-        <p class="filter-value">{{ keyValue.value }}</p>
-      </div>
+  <div class="filter-card" *ngFor="let filter of filters; index as i">
+    <button mat-icon-button class="remove-button" (click)="removeFilter(i)">
+      <mat-icon>highlight_off</mat-icon>
+    </button>
+    <div class="filter" *ngFor="let keyValue of getFilterValues(filter)">
+      <p class="filter-type">{{ keyValue.key }}:</p>
+      <p class="filter-value">{{ keyValue.value }}</p>
     </div>
-  </ng-scrollbar>
+  </div>
 </div>

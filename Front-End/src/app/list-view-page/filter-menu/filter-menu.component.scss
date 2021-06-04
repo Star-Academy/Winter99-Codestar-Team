@@ -1,4 +1,28 @@
 .container {
   width: 250px;
-  min-height: 100vh;
+  border-right: 1px solid black;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.scrollbar {
+  --scrollbar-size: 0;
+}
+.button-container {
+  text-align: center;
+}
+.filter-form {
+  padding: 10px;
+}
+.filter-form > mat-form-field {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 10px;
+}
+.divider {
+  margin: 5px 5px;
+  border-color: black;
+}
+.filters-list {
+  height: 50vh;
 }

@@ -1,4 +1,41 @@
 <div class="container">
-  <div style="height: 50vh; display: block; width: 100%;background-color: black; "></div>
-  <app-filters-list></app-filters-list>
+  <ng-scrollbar dir="rtl" class="scrollbar">
+    <div class="add-filter-form">
+      <form class="filter-form" dir="rtl" [formGroup]="formGroup">
+        <mat-form-field>
+          <mat-label formControlName="id"> شماره مرجع </mat-label>
+          <input type="number" matInput />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label formControlName="id"> شماره حساب مبدا </mat-label>
+          <input type="number" matInput />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label formControlName="id"> شماره حساب مقصد </mat-label>
+          <input type="number" matInput />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label formControlName="id"> حداقل مقدار تراکنش </mat-label>
+          <input type="number" matInput />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label formControlName="id"> حداکثر مقدار تراکنش </mat-label>
+          <input type="number" matInput />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label formControlName="id"> از تاریخ </mat-label>
+          <input type="datetime-local" matInput />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label formControlName="id"> تا تاریخ </mat-label>
+          <input type="datetime-local" matInput />
+        </mat-form-field>
+        <div class="button-container">
+          <button mat-flat-button type="submit">اضافه کردن فیلتر</button>
+        </div>
+      </form>
+    </div>
+    <mat-divider class="divider"></mat-divider>
+    <app-filters-list class="filters-list"></app-filters-list>
+  </ng-scrollbar>
 </div>
