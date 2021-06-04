@@ -1,6 +1,7 @@
 using System;
 using Back_End.Bank;
 using Back_End.Elastic;
+using Back_End.Graph;
 using Back_End.Users;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,7 @@ namespace Back_End
             services.AddSingleton<IUsersService, UsersService>();
             services.AddSingleton<IBankService, BankService>();
             services.AddSingleton<IUserAuthenticationManager, UserAuthenticationManger>();
+            services.AddSingleton<IGraphService, GraphService>();
 
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
