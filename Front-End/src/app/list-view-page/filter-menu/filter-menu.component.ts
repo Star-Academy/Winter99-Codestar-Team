@@ -16,7 +16,7 @@ export class FilterMenuComponent implements OnInit {
     startDateTime: new FormControl('', []),
     endDateTime: new FormControl('', []),
   });
-  public menuVisibility: string = 'container-show';
+  public menuVisibility: string = 'container-hide';
 
   constructor() {}
 

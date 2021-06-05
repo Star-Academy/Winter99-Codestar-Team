@@ -5,10 +5,9 @@
   min-height: 100vh;
 }
 .expanded-right-menu {
-  grid-template-columns: 59px auto 250px;
+  grid-template-columns: 30px auto 250px;
 }
 .content {
-  // background-color: aqua;
   grid-column: 2;
 }
 .navigation-menu {
