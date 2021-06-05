@@ -38,5 +38,12 @@
     <mat-divider class="divider"></mat-divider>
     <app-filters-list class="filters-list"></app-filters-list>
   </ng-scrollbar>
-  <button class="ope" (click)="toggleMenuVisibilaty()"></button>
+  <button class="ope" (click)="toggleMenuVisibilaty()">
+    <p *ngIf="menuVisibility !== 'container-show'; else closeMenu">
+      منوی فیلترها
+    </p>
+    <ng-template #closeMenu>
+      <mat-icon>arrow_back_ios_new</mat-icon>
+    </ng-template>
+  </button>
 </div>
