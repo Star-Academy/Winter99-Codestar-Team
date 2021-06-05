@@ -3,32 +3,40 @@
     <div class="add-filter-form">
       <form class="filter-form" dir="rtl" [formGroup]="formGroup">
         <mat-form-field>
-          <mat-label formControlName="id"> شماره مرجع </mat-label>
-          <input type="number" matInput />
+          <mat-label> شماره مرجع </mat-label>
+          <input type="number" matInput formControlName="transactionId" />
         </mat-form-field>
         <mat-form-field>
-          <mat-label formControlName="id"> شماره حساب مبدا </mat-label>
-          <input type="number" matInput />
+          <mat-label> شماره حساب مبدا </mat-label>
+          <input type="number" matInput formControlName="sourceAccountId" />
         </mat-form-field>
         <mat-form-field>
-          <mat-label formControlName="id"> شماره حساب مقصد </mat-label>
-          <input type="number" matInput />
+          <mat-label> شماره حساب مقصد </mat-label>
+          <input
+            type="number"
+            matInput
+            formControlName="destinationAccountId"
+          />
         </mat-form-field>
         <mat-form-field>
-          <mat-label formControlName="id"> حداقل مقدار تراکنش </mat-label>
-          <input type="number" matInput />
+          <mat-label> حداقل مقدار تراکنش </mat-label>
+          <input type="number" matInput formControlName="minAmount" />
         </mat-form-field>
         <mat-form-field>
-          <mat-label formControlName="id"> حداکثر مقدار تراکنش </mat-label>
-          <input type="number" matInput />
+          <mat-label> حداکثر مقدار تراکنش </mat-label>
+          <input type="number" matInput formControlName="maxAmount" />
         </mat-form-field>
         <mat-form-field>
-          <mat-label formControlName="id"> از تاریخ </mat-label>
-          <input type="datetime-local" matInput />
+          <mat-label> از تاریخ </mat-label>
+          <input
+            type="datetime-local"
+            matInput
+            formControlName="startDateTime"
+          />
         </mat-form-field>
         <mat-form-field>
-          <mat-label formControlName="id"> تا تاریخ </mat-label>
-          <input type="datetime-local" matInput />
+          <mat-label> تا تاریخ </mat-label>
+          <input type="datetime-local" matInput formControlName="endDateTime" />
         </mat-form-field>
         <div class="button-container">
           <button mat-flat-button type="submit">اضافه کردن فیلتر</button>
@@ -38,7 +46,7 @@
     <mat-divider class="divider"></mat-divider>
     <app-filters-list class="filters-list"></app-filters-list>
   </ng-scrollbar>
-  <button class="ope" (click)="toggleMenuVisibilaty()">
+  <button class="menu-toggle-button" (click)="toggleMenuVisibilaty()">
     <p *ngIf="menuVisibility !== 'container-show'; else closeMenu">
       منوی فیلترها
     </p>

@@ -8,7 +8,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class FilterMenuComponent implements OnInit {
   public formGroup: FormGroup = new FormGroup({
-    id: new FormControl('', []),
+    transactionId: new FormControl('', []),
     sourceAccountId: new FormControl('', []),
     destinationAccountId: new FormControl('', []),
     minAmount: new FormControl('', []),

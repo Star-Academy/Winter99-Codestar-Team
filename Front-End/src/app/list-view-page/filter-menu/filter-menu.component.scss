@@ -31,7 +31,7 @@
 .filters-list {
   height: 50vh;
 }
-.ope {
+.menu-toggle-button {
   position: absolute;
   width: 30px;
   box-shadow: 0px 0px 0px transparent;
@@ -46,7 +46,7 @@
   background-color: white;
   border-radius: 0 20px 20px 0;
 }
-.ope > p {
+.menu-toggle-button > p {
   padding: 3px;
   writing-mode: vertical-rl;
   text-orientation: mixed;
