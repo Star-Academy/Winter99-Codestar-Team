@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { FilterMenuComponent } from './list-view-page/filter-menu/filter-menu.co
 import { SiteNavigationMenuComponent } from './site-navigation-menu/site-navigation-menu.component';
 import { FiltersListComponent } from './list-view-page/filter-menu/filters-list/filters-list.component';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { from } from 'rxjs';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatSidenavModule,
     MatSortModule,
     MatTableModule,
     NgScrollbarModule,
