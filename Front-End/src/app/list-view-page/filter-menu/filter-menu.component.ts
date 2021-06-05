@@ -7,7 +7,7 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./filter-menu.component.scss'],
 })
 export class FilterMenuComponent implements OnInit {
-  formGroup: FormGroup = new FormGroup({
+  public formGroup: FormGroup = new FormGroup({
     id: new FormControl('', []),
     sourceAccountId: new FormControl('', []),
     destinationAccountId: new FormControl('', []),
@@ -16,9 +16,18 @@ export class FilterMenuComponent implements OnInit {
     startDateTime: new FormControl('', []),
     endDateTime: new FormControl('', []),
   });
+  public menuVisibility: string = 'container-show';
 
   constructor() {}
 
   ngOnInit(): void {}
+
   onFormSubmit() {}
+
+  toggleMenuVisibilaty() {
+    this.menuVisibility =
+      this.menuVisibility == 'container-show'
+        ? 'container-hide'
+        : 'container-show';
+  }
 }

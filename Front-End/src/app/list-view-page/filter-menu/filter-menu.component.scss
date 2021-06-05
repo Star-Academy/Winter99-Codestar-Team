@@ -1,9 +1,14 @@
 .container {
-  width: 250px;
   border-right: 1px solid black;
   height: 100vh;
   display: flex;
   flex-direction: column;
+}
+.container-show {
+  width: 250px;
+}
+.container-hide {
+  width: 0;
 }
 .scrollbar {
   --scrollbar-size: 0;
@@ -25,4 +30,13 @@
 }
 .filters-list {
   height: 50vh;
+}
+.ope {
+  position: absolute;
+  width: 30px;
+  height: 40vh;
+  margin-top: 30vh;
+  right: -30px;
+  background-color: black;
+  border-radius: 0 20px 20px 0;
 }

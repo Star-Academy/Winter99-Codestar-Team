@@ -6,6 +6,8 @@
 }
 .container > table {
   width: 80%;
+  border: 1px solid black;
+  border-collapse: collapse;
 }
 table * {
   text-align: center !important;

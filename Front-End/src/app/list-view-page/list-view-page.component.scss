@@ -1,6 +1,6 @@
 .container {
   display: grid;
-  grid-template-columns: 59px auto 60px;
+  grid-template-columns: 30px auto 60px;
   width: 100%;
   min-height: 100vh;
 }
@@ -8,7 +8,7 @@
   grid-template-columns: 59px auto 250px;
 }
 .content {
-  background-color: aqua;
+  // background-color: aqua;
   grid-column: 2;
 }
 .navigation-menu {

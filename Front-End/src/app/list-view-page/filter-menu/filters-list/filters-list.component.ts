@@ -88,4 +88,5 @@ export class FiltersListComponent implements OnInit {
       .slice(0, index)
       .concat(this.filters.slice(index + 1));
   }
+
 }

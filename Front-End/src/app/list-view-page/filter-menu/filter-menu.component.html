@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" [ngClass]="menuVisibility">
   <ng-scrollbar dir="rtl" class="scrollbar">
     <div class="add-filter-form">
       <form class="filter-form" dir="rtl" [formGroup]="formGroup">
@@ -38,4 +38,5 @@
     <mat-divider class="divider"></mat-divider>
     <app-filters-list class="filters-list"></app-filters-list>
   </ng-scrollbar>
+  <button class="ope" (click)="toggleMenuVisibilaty()"></button>
 </div>
