@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SiteNavigationMenuComponent } from './site-navigation-menu.component';
+import { AddTransactionPageComponent } from './add-transaction-page.component';
 
-describe('SiteNavigationMenuComponent', () => {
-  let component: SiteNavigationMenuComponent;
-  let fixture: ComponentFixture<SiteNavigationMenuComponent>;
+describe('AddTransactionPageComponent', () => {
+  let component: AddTransactionPageComponent;
+  let fixture: ComponentFixture<AddTransactionPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SiteNavigationMenuComponent ]
+      declarations: [ AddTransactionPageComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SiteNavigationMenuComponent);
+    fixture = TestBed.createComponent(AddTransactionPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

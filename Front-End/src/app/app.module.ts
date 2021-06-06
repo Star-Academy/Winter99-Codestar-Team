@@ -19,21 +19,23 @@ import { SingleInputFormComponent } from './login-page/single-input-form/single-
 import { ListViewPageComponent } from './list-view-page/list-view-page.component';
 import { TransactionsListComponent } from './list-view-page/transactions-list/transactions-list.component';
 import { FilterMenuComponent } from './list-view-page/filter-menu/filter-menu.component';
-import { SiteNavigationMenuComponent } from './site-navigation-menu/site-navigation-menu.component';
 import { FiltersListComponent } from './list-view-page/filter-menu/filters-list/filters-list.component';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { from } from 'rxjs';
+import { PageWithNavigationMenuComponent } from './page-with-navigation-menu/page-with-navigation-menu.component';
+import { AddTransactionPageComponent } from './add-transaction-page/add-transaction-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    AddTransactionPageComponent,
     SingleInputFormComponent,
     LoginPageComponent,
     TransactionsListComponent,
     ListViewPageComponent,
     FilterMenuComponent,
-    SiteNavigationMenuComponent,
     FiltersListComponent,
+    PageWithNavigationMenuComponent,
   ],
   imports: [
     AppRoutingModule,

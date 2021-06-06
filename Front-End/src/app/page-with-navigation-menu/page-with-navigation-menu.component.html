@@ -1,0 +1,43 @@
+<div class="page-container">
+  <mat-sidenav-container class="page-content">
+    <mat-sidenav #navManu position="end" mode="side" opened="true">
+      <div class="page-navigation-side-menu">
+        <a href="#" class="navigation-link">
+          <p>افزودن تراکنش</p>
+        </a>
+        <a href="#" class="navigation-link">
+          <p>نمایش گرافی</p>
+        </a>
+        <a href="#" class="navigation-link">
+          <p>نمایش جدولی</p>
+        </a>
+        <button
+          (click)="navManu.toggle()"
+          class="navigation-link menu-toggle-button"
+        >
+          <p>گسترش منو</p>
+        </button>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <ng-content></ng-content>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  <div class="page-navigation-side-menu">
+    <a href="#" class="navigation-link">
+      <mat-icon>add_box</mat-icon>
+    </a>
+    <a href="#" class="navigation-link">
+      <mat-icon>device_hub</mat-icon>
+    </a>
+    <a href="#" class="navigation-link">
+      <mat-icon>table_view</mat-icon>
+    </a>
+    <button
+      (click)="navManu.toggle()"
+      class="navigation-link menu-toggle-button"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+</div>
