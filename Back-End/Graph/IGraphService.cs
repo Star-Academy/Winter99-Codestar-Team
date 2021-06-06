@@ -8,7 +8,7 @@ namespace Back_End.Graph
 
         public Dictionary<Account, Dictionary<Account, Transaction>> CreateGraph(Account src, Account dest, int maxLenght = 7);
 
-        public int GetMaxFlow(Account s, Account t);
+        public long GetMaxFlow(Account s, Account t);
 
     }
 }

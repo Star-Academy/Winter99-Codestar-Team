@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Collections;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -45,7 +46,7 @@ namespace Back_End.Graph
             {
                 var newEdge = new Edge(s, item.Item1, item.Item2);
                 currentPath.Add(newEdge);
-                AddAllPaths(item.Item1, d, currentLength+1, currentPath);
+                AddAllPaths(item.Item1, d, currentLength + 1, currentPath);
                 currentPath.Remove(newEdge);
             }
         }
@@ -59,19 +60,79 @@ namespace Back_End.Graph
         {
             foreach (var edge in path)
             {
-                if(!Graph.ContainsKey(edge.source))
+                if (!Graph.ContainsKey(edge.source))
                     Graph.Add(edge.source, new Dictionary<Account, Transaction>());
-                if(!Graph.ContainsKey(edge.destination))
+                if (!Graph.ContainsKey(edge.destination))
                     Graph.Add(edge.destination, new Dictionary<Account, Transaction>());
-                if(!Graph[edge.source].ContainsKey(edge.destination))
+                if (!Graph[edge.source].ContainsKey(edge.destination))
                     Graph[edge.source].Add(edge.destination, edge.transaction);
-            }   
+            }
         }
 
-        public int GetMaxFlow(Account s, Account t)
+        public long GetMaxFlow(Account s, Account t)
         {
-            // todo : implement Ford-fulkerson algorithm
-            return 0;
+            var rGraph = GetResidualGraph();
+            var parent = new Dictionary<Account, Account>();
+            long maxFlow = 0;
+            while (bfs(rGraph, s, t, parent))
+            {
+                long pathFlow = Int64.MaxValue;
+                for (var v = t; v != s ; v = parent[v]) 
+                {
+                    pathFlow = Math.Min(pathFlow, rGraph[parent[v]][v]);
+                }
+                
+                for (var v = t; v != s ; v = parent[v]) 
+                {
+                    rGraph[parent[v]][v] -= pathFlow;
+                    if(rGraph[v].ContainsKey(parent[v]))
+                        rGraph[v][parent[v]] += pathFlow;
+                    else
+                        rGraph[v][parent[v]] = pathFlow;
+                }
+                maxFlow += pathFlow;
+            }
+            return maxFlow;
+        }
+
+        private Dictionary<Account, Dictionary<Account, long>> GetResidualGraph()
+        {
+            var rGraph = new Dictionary<Account, Dictionary<Account, long>>();
+            foreach (var i in Graph)
+            {
+                rGraph[i.Key] = new Dictionary<Account, long>();
+                foreach (var e in i.Value)
+                {
+                    rGraph[i.Key][e.Key] = e.Value.Amount;
+                }
+            }
+            return rGraph;
+        }
+
+        private bool bfs(Dictionary<Account, Dictionary<Account, long>> Graph, Account s, Account t, Dictionary<Account, Account> parent)
+        {
+            var visited = new HashSet<Account> { s };
+            var queue = new List<Account>();
+
+            while (queue.Count > 0)
+            {
+                var u = queue[0];
+                queue.RemoveAt(0);
+
+                foreach (var entry in Graph[u])
+                {
+                    var v = entry.Key;
+                    if (!visited.Contains(v))
+                    {
+                        parent[v] = u;
+                        if (v == t)
+                            return true;
+                        queue.Add(v);
+                        visited.Add(v);
+                    }
+                }
+            }
+            return false;
         }
     }
 }
