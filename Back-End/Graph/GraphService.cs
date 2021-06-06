@@ -122,7 +122,7 @@ namespace Back_End.Graph
                 foreach (var entry in Graph[u])
                 {
                     var v = entry.Key;
-                    if (!visited.Contains(v))
+                    if (!visited.Contains(v) && Graph[u][v] > 0)
                     {
                         parent[v] = u;
                         if (v == t)
